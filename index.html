@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JACK&amp;JONES Danmark – mock-up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --fg:#000000; --muted:#6b6b6b; --line:#e2e2e2; --soft:#f5f5f5;
+  --img-bg:#f2f2f2; --sale:#c8102e; --ok:#1d6b3f; --warn:#8a5a00;
+  --btn-bg:#000000; --btn-fg:#ffffff; --bar-bg:#000000; --bar-fg:#ffffff;
+  --focus:#2a6df4;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#151515; --fg:#f4f4f4; --muted:#a3a3a3; --line:#333333; --soft:#1f1f1f;
+    --img-bg:#f2f2f2; --sale:#ff5a6e; --ok:#5fcf8f; --warn:#f0b54a;
+    --btn-bg:#f4f4f4; --btn-fg:#000000; --bar-bg:#000000; --bar-fg:#ffffff; --focus:#7aa7ff;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#151515; --fg:#f4f4f4; --muted:#a3a3a3; --line:#333333; --soft:#1f1f1f;
+  --img-bg:#f2f2f2; --sale:#ff5a6e; --ok:#5fcf8f; --warn:#f0b54a;
+  --btn-bg:#f4f4f4; --btn-fg:#000000; --bar-bg:#000000; --bar-fg:#ffffff; --focus:#7aa7ff;
+  color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+img{max-width:100%}
+.wrap{max-width:1440px;margin:0 auto;padding:0 24px}
+@media (max-width:640px){.wrap{padding:0 14px}}
+.cond{font-stretch:75%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.usp{background:var(--bar-bg);color:var(--bar-fg);font-size:12.5px}
+.usp .wrap{display:flex;justify-content:center;gap:40px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.usp span{display:inline-flex;align-items:center;gap:7px}
+@media (max-width:760px){.usp span:nth-child(n+2){display:none}}
+
+/* header */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.hdr{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:64px}
+.hdr .left{display:flex;gap:22px;font-weight:600;font-size:14px}
+.hdr .left a{text-decoration:none}
+.hdr .left a.on{border-bottom:2px solid var(--fg);padding-bottom:2px}
+.logo{text-decoration:none;display:block;line-height:1;text-align:center}
+.logo b{display:block;font-weight:900;font-stretch:72%;font-size:30px;letter-spacing:-.5px}
+.logo b i{font-style:normal;font-weight:500;padding:0 1px}
+.hdr .right{display:flex;justify-content:flex-end;align-items:center;gap:4px}
+.icon-btn{background:none;border:0;padding:8px;cursor:pointer;display:inline-flex;align-items:center;position:relative;text-decoration:none}
+.icon-btn svg{width:22px;height:22px}
+.count{position:absolute;top:2px;right:0;min-width:17px;height:17px;border-radius:9px;background:var(--fg);color:var(--bg);font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.lang{display:inline-flex;border:1px solid var(--line);margin-right:8px}
+.lang button{border:0;background:none;padding:4px 8px;font-size:12px;font-weight:700;cursor:pointer;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+nav.cats{border-top:1px solid var(--line)}
+nav.cats .wrap{display:flex;gap:26px;overflow-x:auto;height:46px;align-items:center;scrollbar-width:none}
+nav.cats a{text-decoration:none;text-transform:uppercase;font-weight:700;font-size:13px;letter-spacing:.3px;white-space:nowrap}
+nav.cats a.sale{color:var(--sale)}
+@media (max-width:760px){.hdr .left{display:none}.hdr{grid-template-columns:auto 1fr;gap:10px}.logo{text-align:left}.logo b{font-size:22px}.lang{margin-right:2px}.icon-btn{padding:6px}}
+
+/* breadcrumbs & headings */
+.crumbs{font-size:12.5px;color:var(--muted);padding:18px 0 6px;display:flex;gap:6px;flex-wrap:wrap}
+.crumbs a{text-decoration:none}.crumbs a:hover{text-decoration:underline}
+h1.page{font-stretch:75%;font-weight:800;font-size:clamp(28px,4vw,44px);line-height:1.05;margin:6px 0 4px;letter-spacing:-.3px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 18px}
+
+/* toolbar */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:24px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--bg);padding:7px 14px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+select.chip{appearance:none;padding-right:28px;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+
+/* image panel + watermark */
+.ph{position:relative;background:var(--img-bg);aspect-ratio:3/4;overflow:hidden;display:block}
+.ph .art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.ph .art svg{width:78%;height:auto}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;opacity:0}
+.ph.has-photo img{opacity:1}
+.ph.has-photo .art{display:none}
+.ph::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='110'%3E%3Ctext x='85' y='60' text-anchor='middle' transform='rotate(-28 85 55)' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='19' letter-spacing='2' fill='rgba(0,0,0,0.16)' stroke='rgba(255,255,255,0.35)' stroke-width='0.8'%3EMOCK UP%3C/text%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:170px 110px}
+.ph.sm::after{background-size:90px 58px}
+
+/* product grid */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 16px;margin-bottom:56px}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card a.ph{cursor:pointer}
+.meta-row{display:flex;justify-content:space-between;align-items:center;min-height:30px;margin-top:10px}
+.badges{display:flex;gap:6px}
+.badge{font-size:11.5px;font-weight:700;padding:2px 7px;border:1px solid currentColor}
+.badge.sale{color:var(--sale)}
+.heart{background:none;border:0;padding:4px;cursor:pointer;display:inline-flex}
+.heart svg{width:20px;height:20px}
+.heart[aria-pressed="true"] svg path{fill:currentColor}
+.brand{font-size:11.5px;color:var(--muted);font-weight:600;letter-spacing:.2px}
+.card .name{display:block;font-weight:600;text-decoration:none;font-size:14.5px;line-height:1.3;margin:2px 0 4px}
+.card .name:hover{text-decoration:underline}
+.price{font-weight:700;font-size:14.5px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.price .now.red{color:var(--sale)}
+.price s{color:var(--muted);font-weight:500;font-size:13px}
+.swatch{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-top:4px}
+.swatch i{width:12px;height:12px;border-radius:50%;border:1px solid var(--line);display:inline-block}
+.dlv-mini{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:12.5px;display:grid;gap:4px}
+.dlv-mini div{display:flex;gap:7px;align-items:flex-start;line-height:1.35}
+.dlv-mini svg{width:15px;height:15px;flex:none;margin-top:1px}
+.ok{color:var(--ok)} .warn{color:var(--warn)}
+
+/* location */
+.loc{border:1px solid var(--line);padding:14px;background:var(--soft)}
+.loc label{display:block;font-weight:700;font-size:13.5px;margin-bottom:6px}
+.loc .row{display:flex;gap:8px}
+.loc input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);padding:10px 12px}
+.loc .err{color:var(--sale);font-size:12.5px;margin-top:6px}
+.loc .set{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px}
+.loc .set b{font-weight:700}
+.linkbtn{background:none;border:0;padding:0;text-decoration:underline;cursor:pointer;font-size:13px;font-weight:600}
+.btn{background:var(--btn-bg);color:var(--btn-fg);border:1px solid var(--btn-bg);padding:12px 18px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.4px;font-size:13.5px;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:8px}
+.btn.ghost{background:var(--bg);color:var(--fg);border-color:var(--fg)}
+.btn.block{width:100%;padding:16px}
+.btn.sm{padding:10px 14px;font-size:12.5px}
+
+/* delivery options */
+.opts{display:grid;gap:0;border:1px solid var(--line);margin-top:12px}
+.opt{display:grid;grid-template-columns:22px 1fr auto;gap:10px;padding:12px 14px;border-top:1px solid var(--line);align-items:start}
+.opt:first-child{border-top:0}
+.opt svg{width:20px;height:20px;margin-top:1px}
+.opt .t{font-weight:700;font-size:14px}
+.opt .d{font-size:13px;color:var(--muted)}
+.opt .d.exact{color:var(--fg)}
+.opt .d.exact b{color:var(--ok)}
+.opt .p{font-weight:700;font-size:13.5px;white-space:nowrap}
+.opt.na{opacity:.55}
+label.opt{cursor:pointer}
+label.opt input{position:absolute;opacity:0;pointer-events:none}
+label.opt .radio{width:18px;height:18px;border:2px solid var(--fg);border-radius:50%;margin-top:2px;display:inline-flex;align-items:center;justify-content:center}
+label.opt input:checked + .radio::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--fg)}
+label.opt:has(input:checked){background:var(--soft)}
+label.opt:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-2px}
+.choose{grid-template-columns:22px 22px 1fr auto}
+
+/* PDP */
+.pdp{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px;margin:8px 0 64px;align-items:start}
+@media (max-width:900px){.pdp{grid-template-columns:minmax(0,1fr);gap:20px}}
+.pdp .ph{aspect-ratio:4/5}
+.pdp .ph .art svg{width:62%}
+.pdp h1{font-stretch:75%;font-weight:800;font-size:clamp(26px,3vw,36px);line-height:1.08;margin:4px 0 10px}
+.pdp .price{font-size:20px;margin-bottom:6px}
+.pdp .price s{font-size:16px}
+.section{margin-top:22px}
+.section h2{font-size:14px;font-weight:700;margin:0 0 10px}
+.sizes{display:grid;grid-template-columns:repeat(auto-fill,minmax(58px,1fr));gap:8px}
+.size{border:1px solid var(--line);background:var(--bg);padding:11px 0;font-weight:600;cursor:pointer;font-size:14px}
+.size:hover{border-color:var(--fg)}
+.size[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.size:disabled{color:var(--muted);text-decoration:line-through;cursor:not-allowed;background:var(--soft)}
+.size.oos{color:var(--muted);text-decoration:line-through;background:var(--soft)}
+.size.soon{position:relative;background:var(--soft)}
+.size.soon::after{content:"";position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.size.oos[aria-pressed="true"],.size.soon[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.legend{font-size:12.5px;color:var(--muted);margin-top:10px;display:flex;gap:18px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+.rescue{border:1px solid var(--line);border-left:3px solid var(--warn);padding:16px}
+.rescue.soon,.rescue.done{border-left-color:var(--ok)}
+.rescue h3{margin:0 0 4px;font-size:15px}
+.rescue p{margin:0 0 12px;font-size:14px;color:var(--muted);max-width:60ch}
+.rescue .row{display:flex;gap:8px;flex-wrap:wrap}
+.rescue input{flex:1;min-width:180px;border:1px solid var(--line);background:var(--bg);padding:10px 12px}
+.rescue input[aria-invalid="true"]{border-color:var(--sale)}
+.alt{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px;font-size:13px}
+.alt button{border:1px solid var(--line);background:var(--bg);padding:5px 12px;font-weight:600;cursor:pointer}
+.alt button:hover{border-color:var(--fg)}
+.pretag{display:inline-block;font-size:12px;font-weight:700;color:var(--ok);margin-top:4px}
+.formerr{color:var(--sale);font-size:13px;margin-top:8px;font-weight:600}
+.stores{display:grid;gap:0;border:1px solid var(--line);margin-top:10px;font-size:13.5px}
+.stores div{padding:10px 14px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
+.stores div:first-child{border-top:0}
+.stores small{color:var(--muted);display:block;font-size:12px}
+details.acc{border-top:1px solid var(--line);padding:14px 0}
+details.acc:last-of-type{border-bottom:1px solid var(--line)}
+details.acc summary{font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+details.acc summary::after{content:"+";font-weight:400;font-size:20px;line-height:1}
+details.acc[open] summary::after{content:"–"}
+details.acc p{margin:10px 0 8px;max-width:62ch}
+dl.attrs{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px;margin:8px 0 0;font-size:14px}
+dl.attrs dt{color:var(--muted)} dl.attrs dd{margin:0}
+
+/* basket + checkout */
+.two{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:40px;margin:8px 0 64px;align-items:start}
+@media (max-width:960px){.two{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.loc .row{flex-wrap:wrap}.loc .row .btn{width:100%}.line{grid-template-columns:84px 1fr auto;gap:12px}}
+.line{display:grid;grid-template-columns:110px 1fr auto;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.line:first-child{border-top:1px solid var(--line)}
+.line .ph{aspect-ratio:3/4}
+.line .ttl{font-weight:700;text-decoration:none}
+.line .ttl:hover{text-decoration:underline}
+.line .info{font-size:13.5px;color:var(--muted)}
+.qty{display:inline-flex;border:1px solid var(--line);margin-top:10px;align-items:center}
+.qty button{background:none;border:0;width:34px;height:34px;cursor:pointer;font-size:16px}
+.qty span{min-width:28px;text-align:center;font-weight:700}
+.panel{border:1px solid var(--line);padding:20px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 130px)}
+@media (max-width:960px){.panel{position:static}}
+.panel h2{font-stretch:75%;font-weight:800;font-size:22px;margin:0 0 14px}
+.tot{display:grid;gap:8px;font-size:14px;margin-top:16px}
+.tot div{display:flex;justify-content:space-between;gap:10px}
+.tot .grand{font-weight:800;font-size:17px;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.freebar{height:4px;background:var(--line);margin:8px 0 4px}
+.freebar i{display:block;height:100%;background:var(--fg)}
+.empty{padding:56px 0 80px;text-align:center}
+.empty h1{margin-bottom:10px}
+.empty p{color:var(--muted);margin:0 0 22px}
+
+.steps{display:flex;gap:0;margin:6px 0 24px;font-size:13px;font-weight:700;border-bottom:1px solid var(--line)}
+.steps span{padding:10px 18px 10px 0;color:var(--muted)}
+.steps span.on{color:var(--fg)}
+fieldset{border:0;padding:0;margin:0 0 30px}
+legend{font-stretch:75%;font-weight:800;font-size:22px;margin-bottom:12px;padding:0}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fields .full{grid-column:1/-1}
+@media (max-width:560px){.fields{grid-template-columns:1fr}}
+.f label{display:block;font-size:12.5px;font-weight:700;margin-bottom:4px}
+.f input{width:100%;border:1px solid var(--line);background:var(--bg);padding:11px 12px}
+.f input[aria-invalid="true"]{border-color:var(--sale)}
+.f .msg{color:var(--sale);font-size:12px;margin-top:3px}
+.hint{font-size:13px;color:var(--muted);margin:8px 0 0}
+.mini-line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.mini-line .ph{aspect-ratio:3/4}
+.promise{background:var(--soft);border-left:3px solid var(--ok);padding:12px 14px;font-size:14px;margin-top:14px}
+.promise b{display:block;font-size:15px}
+
+.confirm{max-width:760px;margin:24px auto 72px}
+.confirm .tick{width:52px;height:52px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.confirm .tick svg{width:26px;height:26px}
+.confirm .box{border:1px solid var(--line);padding:20px;margin-top:20px}
+.confirm .big{font-stretch:75%;font-weight:800;font-size:clamp(22px,3vw,30px);line-height:1.15;margin:4px 0 0}
+
+footer.site{background:#000;color:#fff;margin-top:20px;padding:40px 0 28px;font-size:13px}
+footer.site .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media (max-width:760px){footer.site .cols{grid-template-columns:1fr 1fr}}
+footer.site h3{font-size:13px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.4px}
+footer.site p{margin:0 0 6px;color:#bdbdbd}
+footer.site .fine{border-top:1px solid #333;margin-top:28px;padding-top:16px;color:#9a9a9a;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* ---- v2 additions ---- */
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip svg{width:15px;height:15px}
+.noresults{padding:40px 0 80px;color:var(--muted)}
+.opt .store-line{color:var(--muted)}
+.rescue.store{border-left-color:var(--ok)}
+.rescue ul{list-style:none;margin:0 0 14px;padding:0;font-size:13.5px;border-top:1px solid var(--line)}
+.rescue li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.rescue li small{display:block;color:var(--muted);font-size:12px}
+.aisle{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;margin-top:12px;padding:12px 14px;background:var(--soft)}
+.aisle svg{width:18px;height:18px;flex:none;margin-top:1px}
+.stores .rbtn{border:1px solid var(--fg);background:var(--bg);font-weight:700;font-size:12px;padding:5px 10px;cursor:pointer;margin-top:4px;text-transform:uppercase;letter-spacing:.3px}
+.stores .rbtn:hover{background:var(--fg);color:var(--bg)}
+.reserved{color:var(--ok);font-weight:700;font-size:12px;margin-top:4px;display:block}
+.datechips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.datechip{position:relative;cursor:pointer}
+.datechip input{position:absolute;opacity:0;pointer-events:none}
+.datechip span{display:block;border:1px solid var(--line);padding:8px 12px;font-size:13px;font-weight:600;text-align:center;min-width:92px;background:var(--bg)}
+.datechip small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+.datechip input:checked + span{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.datechip input:checked + span small{color:inherit}
+.datechip input:focus-visible + span{outline:2px solid var(--focus);outline-offset:2px}
+.edit-line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.edit-line .ph{aspect-ratio:3/4}
+.edit-line select,.ret-line select{border:1px solid var(--line);background:var(--bg);padding:7px 10px}
+.row-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.ret-line{display:grid;grid-template-columns:84px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ret-line .ph{aspect-ratio:3/4}
+.seg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.seg label{cursor:pointer;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:inline-block;border:1px solid var(--line);padding:7px 12px;font-size:13px;font-weight:600}
+.seg input:checked + span{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.seg input:focus-visible + span{outline:2px solid var(--focus);outline-offset:2px}
+.qr{width:150px;height:150px;background:#fff;padding:8px;border:1px solid var(--line)}
+.ret-done{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start}
+@media (max-width:600px){.ret-done{grid-template-columns:1fr}}
+footer.site a{color:#bdbdbd;text-decoration:none}
+footer.site a:hover{color:#fff;text-decoration:underline}
+
+/* modal + toast */
+.modal-bg{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--bg);color:var(--fg);width:min(520px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:24px;position:relative}
+.modal h2{font-stretch:75%;font-weight:800;font-size:24px;margin:0 0 8px;line-height:1.1}
+.modal p{margin:0 0 14px;color:var(--muted)}
+.modal .x{position:absolute;top:10px;right:10px;background:none;border:0;font-size:22px;cursor:pointer;padding:6px 10px}
+.modal .f{margin-bottom:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:90;background:var(--fg);color:var(--bg);padding:10px 16px;font-weight:600;font-size:14px}
+
+/* ---- guided demo layer (OneStock styling, kept visually separate from the shop) ---- */
+.os{--os-navy:#0e1530;--os-navy2:#18214a;--os-teal:#3ee6c4;--os-ink:#ffffff;--os-dim:#b9c0dc}
+#tour-fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:55;background:#0e1530;color:#fff;border:2px solid #3ee6c4;padding:11px 16px;font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#tour-fab[hidden],#tour-ring[hidden],#tour-pop[hidden],.toast[hidden]{display:none!important}
+#tour-fab i{width:9px;height:9px;border-radius:50%;background:#3ee6c4;display:inline-block}
+#tour-ring{position:fixed;z-index:60;pointer-events:none;border:2px solid #3ee6c4;border-radius:4px;box-shadow:0 0 0 9999px rgba(8,12,30,.48);transition:top .25s ease,left .25s ease,width .25s ease,height .25s ease}
+#tour-pop{position:fixed;z-index:61;width:min(380px,calc(100vw - 24px));background:#0e1530;color:#fff;box-shadow:0 18px 50px rgba(0,0,0,.35);font-size:14px;line-height:1.45}
+#tour-pop .tp-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #263160;font-size:12.5px;color:#b9c0dc}
+#tour-pop .tp-head b{color:#3ee6c4;font-weight:700}
+#tour-pop .tp-x{background:none;border:0;color:#fff;font-size:20px;cursor:pointer;line-height:1;padding:2px 6px}
+#tour-pop .tp-body{padding:14px 16px 4px}
+#tour-pop h3{margin:0 0 10px;font-size:18px;font-weight:800;font-stretch:80%;line-height:1.15}
+#tour-pop .tp-today{border-left:3px solid #ff9f43;padding:2px 0 2px 10px;margin-bottom:10px}
+#tour-pop .tp-now{border-left:3px solid #3ee6c4;padding:2px 0 2px 10px;margin-bottom:10px}
+#tour-pop .tp-today b,#tour-pop .tp-now b{display:block;font-size:11.5px;letter-spacing:.3px;color:#b9c0dc;font-weight:700;margin-bottom:2px}
+#tour-pop p{margin:0}
+#tour-pop .tp-try{background:#18214a;padding:8px 10px;margin:4px 0 10px;font-size:13px}
+#tour-pop .tp-nav{display:flex;justify-content:space-between;gap:8px;padding:10px 16px 14px;flex-wrap:wrap}
+#tour-pop button.tb{background:none;border:1px solid #3a4680;color:#fff;padding:8px 14px;font-weight:700;cursor:pointer;font-size:13px}
+#tour-pop button.tb.primary{background:#3ee6c4;border-color:#3ee6c4;color:#0e1530}
+#tour-pop .dots{display:flex;gap:5px;align-items:center}
+#tour-pop .dots i{width:7px;height:7px;border-radius:50%;background:#3a4680;display:block}
+#tour-pop .dots i.on{background:#3ee6c4}
+@media (max-width:700px){#tour-pop{left:0!important;right:0;bottom:0;top:auto!important;width:100%!important;max-height:52vh;overflow:auto;padding-bottom:env(safe-area-inset-bottom,0px)}}
+.os-menu{background:#0e1530;color:#fff;width:min(620px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:26px;position:relative}
+.os-menu .x{color:#fff}
+.os-menu h2{font-stretch:80%;font-weight:800;font-size:26px;margin:0 0 6px;line-height:1.1}
+.os-menu .lead{color:#b9c0dc;margin:0 0 18px}
+.os-score{display:flex;gap:22px;align-items:baseline;margin:6px 0 18px;flex-wrap:wrap}
+.os-score b{font-size:40px;font-weight:800;color:#3ee6c4;font-stretch:80%;line-height:1}
+.os-score span{color:#b9c0dc;font-size:13px}
+.os-paths{display:grid;gap:8px}
+.os-paths button{display:grid;grid-template-columns:1fr auto;gap:4px 12px;text-align:left;background:#18214a;border:1px solid #263160;color:#fff;padding:12px 14px;cursor:pointer;font:inherit}
+.os-paths button:hover,.os-paths button:focus-visible{border-color:#3ee6c4}
+.os-paths b{font-size:15px}
+.os-paths small{color:#b9c0dc;grid-column:1}
+.os-paths em{font-style:normal;color:#3ee6c4;font-weight:700;grid-row:1/3;grid-column:2;align-self:center;font-size:13px;text-align:right}
+.os-foot{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px;flex-wrap:wrap;color:#b9c0dc;font-size:12px}
+.os-foot button{background:none;border:1px solid #3a4680;color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}
+@media (prefers-reduced-motion: reduce){#tour-ring{transition:none}}
+</style>
+</head>
+<body>
+<div class="usp" id="usp"></div>
+<header class="site" id="hdr"></header>
+<main id="app" tabindex="-1"></main>
+<footer class="site" id="ftr"></footer>
+<div id="modal"></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<button id="tour-fab" type="button" aria-label="Open the guided demo"></button>
+<div id="tour-ring" hidden></div>
+<div id="tour-pop" role="dialog" aria-live="polite" aria-label="Guided demo" hidden></div>
+<script>
+/* ================= data ================= */
+const PRODUCTS = [
+  { slug:"bomber-jakke", pid:"12165203_2078", name:"Bomber jakke", brand:"JACK&JONES ESSENTIALS",
+    price:399.95, old:null, color:"Navy Blazer", hex:"#2c3346", shape:"jacket",
+    cat:{da:"Jakker",en:"Jackets"},
+    img:"https://images.jackjones.com/12165203/3224976/001/jackjones-jjerushbombernoos-blaa.png?v=cde608edd655b5c71e71675daaf702f5",
+    sizes:[["XS",1],["S",1],["M",1],["L",1],["XL",1],["XXL",1]],
+    desc:{
+      da:{intro:"Kør det afslappede look med en kvalitetsjakke til hverdagsbrug. Letvægtsmateriale er fint og let for en åndbar og komfortabel fornemmelse.",
+        attrs:[["Produkttype","Bomber jakke"],["Funktionalitet","Vandafvisende"],["Hals","Baseball"],["Ærme","Lange ærmer"],["Lukning","Lynlåslukning"],["Lommer","Lommer foran med lynlåslukning. Lomme på ærmet"],["Længde/størrelse","Kort"]]},
+      en:{intro:"Take on the relaxed look with a quality jacket for everyday wear. The lightweight material is fine and light for a breathable, comfortable feel.",
+        attrs:[["Product type","Bomber jacket"],["Functionality","Water-repellent"],["Neck","Baseball"],["Sleeve","Long sleeves"],["Closure","Zip"],["Pockets","Front pockets with zip. Sleeve pocket"],["Length","Short"]]}}},
+  { slug:"ensfarvet-striktroeje", pid:"12137190_2098", name:"Ensfarvet Striktrøje", brand:"JACK&JONES ESSENTIALS",
+    price:299.95, old:null, color:"Scarab", hex:"#34473b", shape:"knit",
+    cat:{da:"Strik",en:"Knitwear"},
+    img:"https://images.jackjones.com/12137190/5024023/001/jackjones-jorbasicknitcrewnecknoos-groen.png?v=0bb823e21a20d64697dc707e9a7e5517",
+    sizes:[["XS",1],["S",1],["M",1],["L",1],["XL",1],["XXL",1]],
+    desc:{
+      da:{intro:"Denne enkle strik er det sikre valg og passer til stort set alt i din garderobe. Fladstrik er et strikket materiale med komfort og fleksibilitet.",
+        attrs:[["Produkttype","Striktrøje"],["Hals","O-hals"],["Ærme","Lange ærmer"],["Pasform","Regular fit"]]},
+      en:{intro:"This simple knit is the safe choice and goes with almost everything in your wardrobe. Flat knit is a knitted material that offers comfort and flexibility.",
+        attrs:[["Product type","Knitted jumper"],["Neck","Crew neck"],["Sleeve","Long sleeves"],["Fit","Regular fit"]]}}},
+  { slug:"jjiglenn-jjfox-jeans", pid:"12111026_2103", name:"JJIGLENN JJFOX BL 655 50SPS NOOS Jeans i slim fit", brand:"JACK&JONES JEANS INTELLIGENCE",
+    price:559.96, old:699.95, color:"Black Denim", hex:"#2b2b2e", shape:"jeans",
+    cat:{da:"Jeans",en:"Jeans"},
+    img:"https://images.jackjones.com/12111026/2291133/001/jackjones-jjiglennjjfoxbl65550spsnoos-graa.png?v=fbf52b025350e2d212d654a47053da61",
+    /* [size, onlineStock, businessDaysUntilIncoming|null, storesHoldingIt?] */
+    sizes:[["26",0,null,["fisketorvet","lyngby","aarhus","kolding"]],["27",1],["28",1],["29",0,6],["30",0,6],["31",0,9],["32",0,9],["33",0,9],["34",1],["36",0,null],["38",0,null]],
+    desc:{
+      da:{intro:"Original er klassiske detaljer og fem lommer; tidløs, ukompliceret og præcis som det har været fra starten. Det er dét, der gør dem til noget, du altid kan regne med, ligesom et par gode jeans skal være.",
+        attrs:[["Produkttype","Jeans i slim fit"],["Talje","Lav talje"],["Pasform","Slim fit jeans med mellemhøj talje, slankt lår, slankt knæ, stram benåbning"]]},
+      en:{intro:"Original means classic details and five pockets; timeless, uncomplicated and precise, just as it has been from the start. That’s what makes them something you can always count on, just like a good pair of jeans should be.",
+        attrs:[["Product type","Slim fit jeans"],["Waist","Low waist"],["Fit","Slim fit jeans with a mid waist, slim thigh, slim knee and tight leg opening"]]}}},
+  { slug:"logo-haettetroeje", pid:"12152840_2094_1170953", name:"Logo Hættetrøje", brand:"JACK&JONES ESSENTIALS",
+    price:299.95, old:null, color:"Turbulence", hex:"#4f5966", shape:"hoodie",
+    cat:{da:"Sweatshirts",en:"Sweatshirts"},
+    img:"https://images.jackjones.com/12152840/5027881/001/jackjones-jcocorplogosweathoodnoos-blaa.png?v=b63dc5bfd06fca45f887631303d259f4",
+    sizes:[["XS",1],["S",1],["M",1],["L",1],["XL",1],["XXL",1]],
+    desc:{
+      da:{intro:"Ingen garderobe er komplet uden et par pålidelige basisdele som sweats. Børstet stof med en blød inderside. Letbørstet stof er defineret ved, at stoffets inderside har en let håragtig tekstur og en blød fornemmelse.",
+        attrs:[["Produkttype","Hættetrøje"],["Hals","Hættetrøje"],["Ærme","Lange ærmer"],["Ærmer","Påsatte ærmer"],["Lommer","Kængurulomme"],["Print","Pigmentprint for at bevare lysere materialers bløde overflade"],["Pasform","Regular fit"]]},
+      en:{intro:"No wardrobe is complete without a few reliable basics like sweats. Brushed fabric with a soft inside: lightly brushed fabric has a slightly fuzzy texture on the inside and a soft feel.",
+        attrs:[["Product type","Hoodie"],["Neck","Hood"],["Sleeve","Long sleeves"],["Sleeves","Set-in sleeves"],["Pockets","Kangaroo pocket"],["Print","Pigment print to keep the soft surface of lighter materials"],["Fit","Regular fit"]]}}}
+];
+
+/* Illustrative store list and ranging (mock-up) */
+const STORES = [
+  {id:"fisketorvet", name:"JACK & JONES Fisketorvet", addr:"Kalvebod Brygge 59, 1560 København V", lat:55.663, lng:12.561},
+  {id:"fields", name:"JACK & JONES Field’s", addr:"Arne Jacobsens Allé 12, 2300 København S", lat:55.630, lng:12.578},
+  {id:"lyngby", name:"JACK & JONES Lyngby Storcenter", addr:"Firskovvej 18, 2800 Kongens Lyngby", lat:55.771, lng:12.506},
+  {id:"roskilde", name:"JACK & JONES Ro’s Torv", addr:"Ro’s Torv 1, 4000 Roskilde", lat:55.646, lng:12.120},
+  {id:"odense", name:"JACK & JONES Rosengårdcentret", addr:"Ørbækvej 75, 5220 Odense SØ", lat:55.383, lng:10.430},
+  {id:"kolding", name:"JACK & JONES Kolding Storcenter", addr:"Skovvangen 42, 6000 Kolding", lat:55.498, lng:9.453},
+  {id:"aarhus", name:"JACK & JONES Bruuns Galleri", addr:"M.P. Bruuns Gade 25, 8000 Aarhus C", lat:56.150, lng:10.205},
+  {id:"aalborg", name:"JACK & JONES Friis", addr:"Nytorv 27, 9000 Aalborg", lat:57.048, lng:9.924}
+];
+const RANGE = {
+  fisketorvet:["bomber-jakke","jjiglenn-jjfox-jeans","logo-haettetroeje"],
+  fields:["bomber-jakke","jjiglenn-jjfox-jeans"],
+  lyngby:["jjiglenn-jjfox-jeans","logo-haettetroeje"],
+  roskilde:["bomber-jakke","ensfarvet-striktroeje"],
+  odense:["bomber-jakke","ensfarvet-striktroeje","jjiglenn-jjfox-jeans","logo-haettetroeje"],
+  kolding:["bomber-jakke","ensfarvet-striktroeje","jjiglenn-jjfox-jeans"],
+  aarhus:["bomber-jakke","ensfarvet-striktroeje","jjiglenn-jjfox-jeans"],
+  aalborg:["ensfarvet-striktroeje","jjiglenn-jjfox-jeans","logo-haettetroeje"]
+};
+
+const PLACES = [
+  [1050,"København K",55.679,12.584,["copenhagen","kobenhavn","københavn","kbh","cph"]],
+  [1550,"København V",55.671,12.560,[]],[1620,"København V",55.670,12.548,[]],[2000,"Frederiksberg",55.678,12.532,["frederiksberg"]],
+  [2100,"København Ø",55.708,12.578,[]],[2200,"København N",55.697,12.548,["nørrebro","norrebro"]],
+  [2300,"København S",55.656,12.603,["amager"]],[2400,"København NV",55.708,12.530,[]],
+  [2450,"København SV",55.650,12.540,[]],[2500,"Valby",55.661,12.505,["valby"]],
+  [2600,"Glostrup",55.666,12.400,["glostrup"]],[2720,"Vanløse",55.687,12.488,["vanløse","vanlose"]],
+  [2800,"Kongens Lyngby",55.771,12.506,["lyngby","kongens lyngby"]],[2900,"Hellerup",55.731,12.570,["hellerup"]],
+  [3000,"Helsingør",56.036,12.613,["helsingør","helsingor","elsinore"]],[3400,"Hillerød",55.927,12.300,["hillerød","hillerod"]],
+  [3700,"Rønne",55.101,14.706,["rønne","ronne","bornholm"]],[4000,"Roskilde",55.641,12.080,["roskilde"]],
+  [4200,"Slagelse",55.402,11.354,["slagelse"]],[4600,"Køge",55.457,12.182,["køge","koge"]],
+  [4700,"Næstved",55.230,11.761,["næstved","naestved"]],[4800,"Nykøbing F",54.769,11.874,["nykøbing f","nykobing f","nykøbing falster"]],
+  [5000,"Odense C",55.403,10.402,["odense"]],[5700,"Svendborg",55.060,10.607,["svendborg"]],
+  [6000,"Kolding",55.490,9.472,["kolding"]],[6100,"Haderslev",55.249,9.488,["haderslev"]],
+  [6400,"Sønderborg",54.909,9.792,["sønderborg","sonderborg"]],[6700,"Esbjerg",55.476,8.459,["esbjerg"]],
+  [7000,"Fredericia",55.565,9.752,["fredericia"]],[7100,"Vejle",55.709,9.536,["vejle"]],
+  [7400,"Herning",56.139,8.974,["herning"]],[7500,"Holstebro",56.360,8.616,["holstebro"]],
+  [8000,"Aarhus C",56.157,10.211,["aarhus","århus","arhus"]],[8200,"Aarhus N",56.185,10.190,[]],
+  [8600,"Silkeborg",56.170,9.545,["silkeborg"]],[8700,"Horsens",55.861,9.850,["horsens"]],
+  [8800,"Viborg",56.453,9.402,["viborg"]],[8900,"Randers C",56.461,10.036,["randers"]],
+  [9000,"Aalborg",57.048,9.919,["aalborg","ålborg","alborg"]],[9800,"Hjørring",57.464,9.982,["hjørring","hjorring"]],
+  [9900,"Frederikshavn",57.441,10.537,["frederikshavn"]]
+];
+
+/* ================= i18n ================= */
+const T = {
+  da:{
+    usp1:"Gratis levering til døren over 399 kr.", usp2:"Click & Collect klar på 1 time", usp3:"Returner i alle butikker",
+    men:"Herre", junior:"Junior", nav:["Nyheder","Tøj","Jeans","Jakker","Strik","Sko","Accessories","Udsalg"],
+    home:"Forside", newin:"Nyheder", plpTitle:"Nyheder til mænd", products:n=>`${n} produkter`,
+    sort:"Sortér", sortRec:"Anbefalet", sortLow:"Pris: lav til høj", sortHigh:"Pris: høj til lav",
+    fSize:"Størrelse", fColour:"Farve", fPrice:"Pris", deliverTo:"Levering til", setLoc:"Angiv postnummer",
+    fSame:"Levering i dag", fStore:s=>`På lager i ${s}`, fStoreGeneric:"På lager i butik nær dig",
+    filterNeedsLoc:"Angiv dit postnummer for at bruge filteret.", noResults:"Ingen produkter matcher dine filtre.", clearFilters:"Fjern filtre",
+    sale:p=>`-${p}%`, wish:"Gem som favorit", colour:"Farve",
+    cardStd:"Levering 3–5 hverdage", cardStore:"Gratis afhentning i butik",
+    cardFrom:d=>`Levering hos dig ${d}`, cardSame:d=>`Levering ${d}, kl. 17–21`, cardStoreNow:s=>`På lager i ${s}, klar i dag`, cardStoreFrom:(s,d)=>`Afhent i ${s} ${d}`,
+    cardStoreTomorrow:s=>`På lager i ${s}`,
+    size:"Vælg størrelse", sizeGuide:"Størrelsesguide", chooseSize:"Vælg en størrelse for at fortsætte.",
+    add:"Læg i kurv", outOfStock:"Udsolgt", desc:"Beskrivelse", details:"Detaljer", artno:"Varenr.",
+    delivery:"Levering og afhentning", locLabel:"Hvor skal varen leveres?", locPh:"Postnummer eller by, f.eks. 8000 eller Aarhus",
+    locBtn:"Vis datoer", change:"Skift", locErr:"Vi kunne ikke finde stedet. Prøv et dansk postnummer med 4 cifre.",
+    locGL:"Vi leverer ikke til Grønland og Færøerne fra denne butik.",
+    std:"Standardlevering", fast:"Hurtig levering", next:"Levering næste hverdag", same:"Samme dag fra butik", nominated:"Vælg leveringsdag", pickup:"Afhent i butik",
+    stdG:"3–5 hverdage", fastG:"2–3 hverdage", nextG:"Bestil inden kl. 17:00 på hverdage", sameG:"I større byer, bestil inden kl. 14:00", nominatedG:"Vælg din dag ved kassen, også lørdag", pickupG:"Gratis, klar på 1 time når varen er på lager",
+    nextNA:"Ikke muligt til Bornholm", sameNA:"Ingen butik i nærheden har varen", free:"Gratis", freeOver:"Gratis over 399 kr.",
+    exact:d=>`Leveres <b>${d}</b>`, ready:(d,tm)=>`Klar <b>${d} fra kl. ${tm}</b>`, orderWithin:(h,m)=>`bestil inden ${h} t ${m} min`,
+    sameExact:(d,w)=>`Leveres <b>${d}, kl. ${w}</b>`, fromStore:s=>`fra ${s}`, nomFrom:(d,sat)=>`Vælg dag fra <b>${d}</b>${sat?", også lørdag":""}`,
+    nomPick:"Vælg dag", satNote:"fra butik",
+    storeStock:"Butikslager", storeHint:"Vælg en størrelse for at se lager i dine nærmeste butikker.",
+    storeIn:"På lager", storeOut:"Ikke på lager, kan sendes til butikken", km:k=>`${k} km`,
+    storeEnter:"Angiv postnummer for at se lager i butikker nær dig.",
+    aisle:"I butikken, og din størrelse mangler? Personalet kan bestille den fra hele netværket og sende den hjem til dig.",
+    reserve:"Reserver", reservedTag:"Reserveret til dig",
+    reserveH:"Reserver og betal i butikken", reserveP:(s,z)=>`Vi lægger str. ${z} til side i ${s}. Du betaler, når du henter den.`,
+    reserveName:"Navn", reserveContact:"Mobil eller e-mail", reserveBtn:"Reserver varen",
+    reserveDoneH:"Varen er reserveret", reserveDone:(s,d,tm,hold)=>`Klar i ${s} ${d} fra kl. ${tm}. Vi holder den til ${hold} kl. 20:00, og du betaler i butikken.`,
+    close:"Luk",
+    basket:"Kurv", basketTitle:"Din kurv", empty:"Din kurv er tom", emptyTxt:"Find noget du kan lide, og læg det i kurven.",
+    shop:"Se nyheder", remove:"Fjern", qty:"Antal", sizeL:"Størrelse",
+    summary:"Ordreoversigt", subtotal:"Subtotal", shipping:"Fragt til døren", total:"I alt", vat:"Inkl. moms",
+    toFree:a=>`Du mangler ${a} til gratis levering til døren`, gotFree:"Du har gratis levering til døren",
+    toCheckout:"Gå til kassen", continue:"Fortsæt med at handle",
+    checkout:"Kassen", stepBasket:"Kurv", stepDelivery:"Levering", stepPay:"Betaling",
+    whereDeliver:"Hvor skal vi levere?", whereHint:"Vi viser alle muligheder og datoer, før du udfylder dine oplysninger.",
+    contactAddr:"Kontakt og adresse", email:"E-mail", phone:"Mobilnummer", phoneHint:"Alle landekoder virker, f.eks. +44 eller +46.",
+    fname:"Fornavn", lname:"Efternavn", street:"Vej og husnummer", pc:"Postnummer", city:"By",
+    method:"Leveringsmetode", methodHint:"Indtast dit postnummer for at se den præcise leveringsdato.",
+    pickStore:"Vælg butik", payment:"Betaling", mobilepay:"MobilePay", card:"Betalingskort", klarna:"Klarna",
+    payNote:"Mock-up: der trækkes ingen penge.", place:"Gennemfør køb",
+    req:"Skal udfyldes", badEmail:"Indtast en gyldig e-mail", badPc:"Indtast et gyldigt dansk postnummer",
+    badPhone:"Indtast et gyldigt telefonnummer", unavailable:"Vælg en anden leveringsmetode",
+    yourDate:"Din leveringsdato", yourPickup:"Klar til afhentning",
+    thanks:"Tak for din ordre", orderNo:"Ordrenummer", confirmMail:e=>`Vi har sendt en bekræftelse til ${e}.`,
+    deliverTo2:"Leveres til", pickupAt:"Afhentes i", items:"Varer", backShop:"Fortsæt med at handle",
+    editH:tm=>`Ændr eller annuller frem til kl. ${tm}`, editP:"Ordren er endnu ikke sendt til lageret, så du kan stadig skifte størrelse eller annullere.",
+    editClosed:"Ordren er sendt til lageret og kan ikke længere ændres.",
+    changeSize:"Skift størrelse", cancel:"Annuller ordre", cancelH:"Annuller ordren?", cancelP:"Du får pengene tilbage med det samme. Det kan ikke fortrydes.",
+    cancelYes:"Ja, annuller", cancelNo:"Behold ordren", cancelledH:"Ordren er annulleret", cancelledP:o=>`Ordre ${o} er annulleret, og beløbet er sat tilbage på din betalingsmetode.`,
+    sizeChanged:z=>`Størrelse ændret til ${z}`, returnLink:"Returner eller byt",
+    retTitle:"Returner eller byt", retSub:"100 dages returret. Aflever i en butik eller hos fragtfirmaet.",
+    orderNoL:"Ordrenummer", findOrder:"Find ordre", demoOrder:"Brug en demo-ordre",
+    notFound:"Vi kunne ikke finde en ordre med det nummer og den e-mail.",
+    keep:"Behold", ret:"Returner", exch:"Byt størrelse", newSize:"Ny størrelse",
+    howReturn:"Hvordan vil du returnere?", inStore:"Aflever i butik", inStoreP:"Gratis. Pengene tilbage med det samme, og byt på stedet, hvis størrelsen er på lager.",
+    carrier:"Indlever hos PostNord eller GLS", carrierP:"19,95 kr. trækkes fra refunderingen. Pengene tilbage inden for 14 hverdage.",
+    chooseItem:"Vælg mindst én vare at returnere eller bytte.", submitRet:"Opret retur",
+    retDoneH:"Din retur er oprettet", retNo:"Returnummer", showQRstore:s=>`Vis QR-koden i ${s}.`, showQRcarrier:"Vis QR-koden hos PostNord eller GLS.",
+    outReturn:"Returneres", outExchNow:(z,s)=>`Byttes til str. ${z}, som er klar til dig i ${s}`, outExchShip:(z,d)=>`Byttes til str. ${z}. Den sendes, når returen er scannet, og leveres ${d}`,
+    refundNow:a=>`${a} refunderes med det samme i butikken.`, refund14:a=>`${a} refunderes inden for 14 hverdage.`, noRefund:"Ingen refundering, kun ombytning.",
+    footer:["Kundeservice","Om JACK & JONES","Butikker","Følg os"],
+    f1:["Kontakt os","Levering","Returner eller byt","FAQ"], f2:["Om os","Job","Bæredygtighed","Presse"],
+    f3:["Find butik","Click & Collect","Gavekort"], f4:["Instagram","TikTok","Nyhedsbrev"],
+    fine:"Mock-up til demonstration. Ikke en rigtig butik.",
+    soonTitle:"Udsolgt, på vej igen", lgOut:"Udsolgt", lgSoon:"På vej igen, kan forudbestilles", lgStore:"Kun i butik",
+    soonH:(z,d)=>`Str. ${z} er på lager igen ${d}`,
+    soonP:"Den er udsolgt lige nu, men en ny levering er på vej til vores lager. Forudbestil i dag, så sender vi den, så snart den lander.",
+    preorderDate:d=>`Forudbestil, leveres ${d}`, preorder:"Forudbestil",
+    storeH:n=>`Udsolgt online, men på lager i ${n} butikker`, storeP:"Vi sender den direkte fra butikken, eller du kan hente den.",
+    addFromStore:"Læg i kurv, sendes fra butik", fromStoreTag:"Sendes fra butik",
+    notifyH:z=>`Str. ${z} er udsolgt`,
+    notifyP:"Ingen butik har den, og der er ingen levering på vej. Skriv din e-mail, så giver vi besked, hvis den kommer tilbage.",
+    notifyLabel:"E-mail til lagerbesked", notifyBtn:"Giv mig besked", notifyPh:"Din e-mail",
+    notifyDoneH:"Du får besked", notifyDone:(z,e)=>`Vi sender en e-mail til ${e}, hvis str. ${z} kommer tilbage på lager.`, notifyUndo:"Fortryd",
+    altSizes:"På lager nu:", noDate:"Leveringsdatoer vises, når størrelsen er tilbage på lager.",
+    fromDate:d=>`fra ${d}`, preTag:d=>`Forudbestilling, på lager igen ${d}`, preShort:"Forudbestilling",
+    shipTogether:"Ordren sendes samlet, når alle varer er på lager. Datoerne tager højde for det.",
+    guide:"Demo-guide"
+  },
+  en:{
+    usp1:"Free delivery to your door over 399 kr.", usp2:"Click & Collect ready in 1 hour", usp3:"Return in any store",
+    men:"Men", junior:"Junior", nav:["New in","Clothing","Jeans","Jackets","Knitwear","Shoes","Accessories","Sale"],
+    home:"Home", newin:"New in", plpTitle:"New in for men", products:n=>`${n} products`,
+    sort:"Sort", sortRec:"Recommended", sortLow:"Price: low to high", sortHigh:"Price: high to low",
+    fSize:"Size", fColour:"Colour", fPrice:"Price", deliverTo:"Delivering to", setLoc:"Enter postcode",
+    fSame:"Delivered today", fStore:s=>`In stock at ${s}`, fStoreGeneric:"In stock near you",
+    filterNeedsLoc:"Enter your postcode to use this filter.", noResults:"No products match your filters.", clearFilters:"Clear filters",
+    sale:p=>`-${p}%`, wish:"Save to favourites", colour:"Colour",
+    cardStd:"Delivery in 3–5 working days", cardStore:"Free pick up in store",
+    cardFrom:d=>`Delivered to you ${d}`, cardSame:d=>`Delivered ${d}, 17:00–21:00`, cardStoreNow:s=>`In stock at ${s}, ready today`, cardStoreFrom:(s,d)=>`Collect at ${s} ${d}`,
+    cardStoreTomorrow:s=>`In stock at ${s}`,
+    size:"Choose size", sizeGuide:"Size guide", chooseSize:"Choose a size to continue.",
+    add:"Add to basket", outOfStock:"Sold out", desc:"Description", details:"Details", artno:"Item no.",
+    delivery:"Delivery and pick up", locLabel:"Where should we deliver?", locPh:"Postcode or city, e.g. 8000 or Aarhus",
+    locBtn:"Show dates", change:"Change", locErr:"We couldn’t find that place. Try a 4-digit Danish postcode.",
+    locGL:"This store doesn’t deliver to Greenland or the Faroe Islands.",
+    std:"Standard delivery", fast:"Fast delivery", next:"Next-day delivery", same:"Same-day from store", nominated:"Choose your day", pickup:"Pick up in store",
+    stdG:"3–5 working days", fastG:"2–3 working days", nextG:"Order by 17:00 on working days", sameG:"In larger cities, order by 14:00", nominatedG:"Choose your day at checkout, including Saturday", pickupG:"Free, ready in 1 hour when in stock",
+    nextNA:"Not available to Bornholm", sameNA:"No nearby store has this item", free:"Free", freeOver:"Free over 399 kr.",
+    exact:d=>`Delivered <b>${d}</b>`, ready:(d,tm)=>`Ready <b>${d} from ${tm}</b>`, orderWithin:(h,m)=>`order within ${h} h ${m} min`,
+    sameExact:(d,w)=>`Delivered <b>${d}, ${w}</b>`, fromStore:s=>`from ${s}`, nomFrom:(d,sat)=>`Choose a day from <b>${d}</b>${sat?", including Saturday":""}`,
+    nomPick:"Choose a day", satNote:"from store",
+    storeStock:"Store stock", storeHint:"Choose a size to see stock in your nearest stores.",
+    storeIn:"In stock", storeOut:"Not in stock, can be sent to store", km:k=>`${k} km`,
+    storeEnter:"Enter a postcode to see stock in stores near you.",
+    aisle:"In store and your size is missing? Staff can order it from our whole network and send it to your home.",
+    reserve:"Reserve", reservedTag:"Reserved for you",
+    reserveH:"Reserve and pay in store", reserveP:(s,z)=>`We’ll put size ${z} aside at ${s}. You pay when you collect.`,
+    reserveName:"Name", reserveContact:"Mobile or email", reserveBtn:"Reserve item",
+    reserveDoneH:"Item reserved", reserveDone:(s,d,tm,hold)=>`Ready at ${s} ${d} from ${tm}. We’ll hold it until ${hold} at 20:00, and you pay in store.`,
+    close:"Close",
+    basket:"Basket", basketTitle:"Your basket", empty:"Your basket is empty", emptyTxt:"Find something you like and add it to your basket.",
+    shop:"Shop new in", remove:"Remove", qty:"Quantity", sizeL:"Size",
+    summary:"Order summary", subtotal:"Subtotal", shipping:"Delivery to your door", total:"Total", vat:"Incl. VAT",
+    toFree:a=>`Spend ${a} more for free delivery to your door`, gotFree:"You’ve got free delivery to your door",
+    toCheckout:"Go to checkout", continue:"Continue shopping",
+    checkout:"Checkout", stepBasket:"Basket", stepDelivery:"Delivery", stepPay:"Payment",
+    whereDeliver:"Where should we deliver?", whereHint:"We show every option and date before you fill in your details.",
+    contactAddr:"Contact and address", email:"Email", phone:"Mobile number", phoneHint:"Any country code works, e.g. +44 or +46.",
+    fname:"First name", lname:"Last name", street:"Street and number", pc:"Postcode", city:"City",
+    method:"Delivery method", methodHint:"Enter your postcode to see the exact delivery date.",
+    pickStore:"Choose a store", payment:"Payment", mobilepay:"MobilePay", card:"Card", klarna:"Klarna",
+    payNote:"Mock-up: no money is taken.", place:"Place order",
+    req:"Required", badEmail:"Enter a valid email", badPc:"Enter a valid Danish postcode",
+    badPhone:"Enter a valid phone number", unavailable:"Choose another delivery method",
+    yourDate:"Your delivery date", yourPickup:"Ready for pick up",
+    thanks:"Thank you for your order", orderNo:"Order number", confirmMail:e=>`We’ve sent a confirmation to ${e}.`,
+    deliverTo2:"Delivering to", pickupAt:"Picking up at", items:"Items", backShop:"Continue shopping",
+    editH:tm=>`Change or cancel until ${tm}`, editP:"Your order hasn’t been released to the warehouse yet, so you can still change a size or cancel.",
+    editClosed:"Your order has been released to the warehouse and can no longer be changed.",
+    changeSize:"Change size", cancel:"Cancel order", cancelH:"Cancel this order?", cancelP:"You’ll be refunded straight away. This can’t be undone.",
+    cancelYes:"Yes, cancel", cancelNo:"Keep order", cancelledH:"Order cancelled", cancelledP:o=>`Order ${o} is cancelled and the amount has been returned to your payment method.`,
+    sizeChanged:z=>`Size changed to ${z}`, returnLink:"Return or exchange",
+    retTitle:"Return or exchange", retSub:"100-day returns. Drop off in a store or with the carrier.",
+    orderNoL:"Order number", findOrder:"Find order", demoOrder:"Use a demo order",
+    notFound:"We couldn’t find an order with that number and email.",
+    keep:"Keep", ret:"Return", exch:"Exchange size", newSize:"New size",
+    howReturn:"How would you like to return?", inStore:"Drop off in store", inStoreP:"Free. Instant refund, and swap on the spot if the size is in stock.",
+    carrier:"Drop off with PostNord or GLS", carrierP:"19.95 kr. is deducted from your refund. Refunded within 14 working days.",
+    chooseItem:"Choose at least one item to return or exchange.", submitRet:"Create return",
+    retDoneH:"Your return is ready", retNo:"Return number", showQRstore:s=>`Show this QR code at ${s}.`, showQRcarrier:"Show this QR code at PostNord or GLS.",
+    outReturn:"Returned", outExchNow:(z,s)=>`Exchanged for size ${z}, ready for you at ${s}`, outExchShip:(z,d)=>`Exchanged for size ${z}. Sent once the return is scanned, delivered ${d}`,
+    refundNow:a=>`${a} refunded on the spot in store.`, refund14:a=>`${a} refunded within 14 working days.`, noRefund:"No refund, exchange only.",
+    footer:["Customer service","About JACK & JONES","Stores","Follow us"],
+    f1:["Contact us","Delivery","Return or exchange","FAQ"], f2:["About us","Careers","Sustainability","Press"],
+    f3:["Find a store","Click & Collect","Gift cards"], f4:["Instagram","TikTok","Newsletter"],
+    fine:"Mock-up for demonstration purposes. Not a real shop.",
+    soonTitle:"Sold out, more on the way", lgOut:"Sold out", lgSoon:"More on the way, can be pre-ordered", lgStore:"Store stock only",
+    soonH:(z,d)=>`Size ${z} is back in stock ${d}`,
+    soonP:"It’s sold out right now, but a new delivery is on its way to our warehouse. Pre-order today and we’ll send it as soon as it lands.",
+    preorderDate:d=>`Pre-order, delivered ${d}`, preorder:"Pre-order",
+    storeH:n=>`Sold out online, but in stock in ${n} stores`, storeP:"We’ll send it straight from the store, or you can collect it.",
+    addFromStore:"Add to basket, ships from store", fromStoreTag:"Ships from store",
+    notifyH:z=>`Size ${z} is sold out`,
+    notifyP:"No store has it and nothing is on the way. Enter your email and we’ll let you know if it comes back.",
+    notifyLabel:"Email for restock alert", notifyBtn:"Notify me", notifyPh:"Your email",
+    notifyDoneH:"We’ll let you know", notifyDone:(z,e)=>`We’ll email ${e} if size ${z} comes back in stock.`, notifyUndo:"Undo",
+    altSizes:"In stock now:", noDate:"Delivery dates will show once this size is back in stock.",
+    fromDate:d=>`from ${d}`, preTag:d=>`Pre-order, back in stock ${d}`, preShort:"Pre-order",
+    shipTogether:"Your order ships in one parcel once every item is in stock. The dates already allow for this.",
+    guide:"Demo guide"
+  }
+};
+
+/* ================= state ================= */
+const S = {
+  lang:"da", loc:null, basket:[], sel:{}, sort:"rec", wish:{}, filters:{same:false,store:false},
+  form:{email:"",phone:"",fname:"",lname:"",street:"",pc:"",city:"",method:"std",store:null,pay:"mobilepay",nomDate:null},
+  locErr:{}, errors:{}, order:null, sizeErr:false, notify:{}, notifyErr:false, reserved:{},
+  modal:null, toast:null, ret:{step:"find",no:"",email:"",err:false,order:null,sel:{},method:"store",store:null,result:null,errItems:false},
+  tour:null
+};
+const t = k => T[S.lang][k];
+
+/* ================= helpers ================= */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money = v => new Intl.NumberFormat(S.lang==="da"?"da-DK":"en-GB",{style:"currency",currency:"DKK"}).format(v);
+const bySlug = s => PRODUCTS.find(p=>p.slug===s);
+const pIndex = p => PRODUCTS.indexOf(p);
+const short = s => s.name.replace("JACK & JONES ","");
+const ic = (k,px) => ICON[k].replace('<svg',`<svg style="width:${px}px;height:${px}px;vertical-align:-3px"`);
+
+const ICON = {
+  truck:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4.5L21 12.5V16h-8z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg>',
+  fast:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg>',
+  calpick:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="16"/><path d="M3 10h18M8 3v4M16 3v4"/><rect x="13" y="13" width="4" height="4" fill="currentColor"/></svg>',
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg>',
+  store:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 9 5 4h14l2 5M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8M10 21v-5h4v5"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg>',
+  user:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4.5 4.5-6 8-6s7 1.5 8 6"/></svg>',
+  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.5 4 4.5 7.2 4.5c2 0 3.6 1.2 4.8 2.9 1.2-1.7 2.8-2.9 4.8-2.9 3.2 0 5.2 3 4.2 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg>',
+  bag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 8h16l-1 13H5z"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  ret:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9h12a4 4 0 0 1 0 8H8"/><path d="m8 5-4 4 4 4"/></svg>',
+  tablet:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="2.5" width="14" height="19" rx="1.5"/><path d="M10 18.5h4"/></svg>'
+};
+
+function garment(p){
+  const c=p.hex, sh='rgba(0,0,0,.22)', hl='rgba(255,255,255,.10)';
+  const grad=`<defs><linearGradient id="g${p.slug}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".10"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient></defs>`;
+  const torso='M118 72 Q150 88 182 72 L214 82 Q240 92 248 122 L272 292 L238 300 L216 168 L214 304 L86 304 L84 168 L62 300 L28 292 L52 122 Q60 92 86 82 Z';
+  let body='';
+  if(p.shape==='jacket'){
+    body=`<path d="${torso}" fill="${c}"/><path d="${torso}" fill="url(#g${p.slug})"/>
+    <path d="M118 72 Q150 94 182 72 L180 60 Q150 80 120 60 Z" fill="${sh}"/>
+    <rect x="86" y="290" width="128" height="20" fill="${sh}"/>
+    <path d="M28 292 L62 300 L60 318 L25 310 Z M272 292 L238 300 L240 318 L275 310 Z" fill="${sh}"/>
+    <path d="M150 86 L150 310" stroke="${hl}" stroke-width="3"/>
+    <path d="M100 205 L128 205 M172 205 L200 205 M231 150 L246 148" stroke="${hl}" stroke-width="3"/>`;
+  } else if(p.shape==='knit'){
+    let ribs=''; for(let x=90;x<212;x+=7) ribs+=`<path d="M${x} 288 V304" stroke="${sh}" stroke-width="2"/>`;
+    body=`<path d="${torso}" fill="${c}"/><path d="${torso}" fill="url(#g${p.slug})"/>
+    <path d="M118 72 Q150 98 182 72 L178 66 Q150 88 122 66 Z" fill="${sh}"/>
+    ${ribs}<path d="M30 284 L64 292 M270 284 L236 292" stroke="${sh}" stroke-width="10"/>`;
+  } else if(p.shape==='hoodie'){
+    body=`<path d="M112 80 Q104 26 150 22 Q196 26 188 80 Z" fill="${c}"/><path d="M112 80 Q104 26 150 22 Q196 26 188 80 Z" fill="${sh}" opacity=".5"/>
+    <path d="${torso}" fill="${c}"/><path d="${torso}" fill="url(#g${p.slug})"/>
+    <path d="M122 76 Q150 42 178 76 Q150 96 122 76 Z" fill="${sh}"/>
+    <path d="M140 88 L138 140 M160 88 L162 140" stroke="#e8e8e8" stroke-width="2.5"/>
+    <path d="M106 222 L194 222 L206 284 L94 284 Z" fill="none" stroke="${sh}" stroke-width="3"/>
+    <rect x="86" y="290" width="128" height="16" fill="${sh}"/>`;
+  } else {
+    const legs='M98 40 L202 40 L212 64 L226 372 L168 376 L153 160 L147 160 L132 376 L74 372 L88 64 Z';
+    body=`<path d="${legs}" fill="${c}"/><path d="${legs}" fill="url(#g${p.slug})"/>
+    <rect x="98" y="40" width="104" height="18" fill="${sh}"/>
+    <path d="M150 58 Q147 112 152 156" stroke="#a87b45" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+    <path d="M100 66 Q120 92 140 66 M200 66 Q180 92 160 66" stroke="#a87b45" stroke-width="2" stroke-dasharray="4 3" fill="none"/>
+    <path d="M112 40 V58 M188 40 V58 M150 40 V58" stroke="${hl}" stroke-width="5"/>`;
+  }
+  return `<svg viewBox="0 0 300 400" role="img" aria-label="${esc(p.name)}">${grad}${body}</svg>`;
+}
+function photo(p, cls=''){
+  return `<span class="ph ${cls}"><span class="art">${garment(p)}</span><img src="${p.img}" alt="${esc(p.name)}" loading="lazy" onload="this.parentNode.classList.add('has-photo')" onerror="this.remove()"></span>`;
+}
+
+/* ================= delivery engine ================= */
+const HOLIDAYS = new Set(["2026-12-24","2026-12-25","2026-12-26","2026-12-31","2027-01-01","2027-03-25","2027-03-26","2027-03-29","2027-05-06","2027-05-17","2027-06-05","2027-12-24","2027-12-25","2027-12-26"]);
+const iso = d => d.toISOString().slice(0,10);
+function dkClock(){
+  const parts = new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Copenhagen",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
+  const g = k => +parts.find(x=>x.type===k).value;
+  return {today:new Date(Date.UTC(g("year"),g("month")-1,g("day"))), h:g("hour"), m:g("minute")};
+}
+const addDays = (d,n) => new Date(d.getTime()+n*864e5);
+const isBiz = d => { const w=d.getUTCDay(); return w>=1 && w<=5 && !HOLIDAYS.has(iso(d)); };
+const nextBiz = d => { let x=addDays(d,1); while(!isBiz(x)) x=addDays(x,1); return x; };
+const addBiz = (d,n) => { let x=d; for(let i=0;i<n;i++) x=nextBiz(x); return x; };
+const CUTOFF = 17, SAME_CUTOFF = 14, SAME_WINDOW = "17–21", SAME_KM = 15, FREE_OVER = 399;
+const hhmm = mins => `${String(Math.floor(mins/60)%24).padStart(2,"0")}:${String(mins%60).padStart(2,"0")}`;
+function dispatchDay(){ const c=dkClock(); return (isBiz(c.today) && c.h<CUTOFF) ? c.today : nextBiz(c.today); }
+function fmtDate(d, sh){
+  const loc = S.lang==="da"?"da-DK":"en-GB";
+  const c=dkClock(); const diff=Math.round((d-c.today)/864e5);
+  const base = new Intl.DateTimeFormat(loc, sh?{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"}:{weekday:"long",day:"numeric",month:"long",timeZone:"UTC"}).format(d);
+  if(diff===0) return (S.lang==="da"?"i dag, ":"today, ")+base;
+  if(diff===1) return (S.lang==="da"?"i morgen, ":"tomorrow, ")+base;
+  return base;
+}
+function zoneOf(pc){
+  if(pc>=1000 && pc<=2999) return "cph";
+  if(pc>=3000 && pc<=3699) return "zealand";
+  if(pc>=3700 && pc<=3799) return "bornholm";
+  if(pc>=4000 && pc<=4999) return "zealand";
+  if(pc>=5000 && pc<=5999) return "funen";
+  if(pc>=6000 && pc<=9999) return "jutland";
+  return null;
+}
+const ZONE_POS = {cph:[55.68,12.57],zealand:[55.5,11.9],bornholm:[55.1,14.7],funen:[55.4,10.4],jutland:[56.1,9.5]};
+function resolvePlace(raw){
+  const q=(raw||"").trim(); if(!q) return {err:"locErr"};
+  const num=q.match(/\b(\d{4})\b/);
+  if(num){
+    const pc=+num[1];
+    if(pc>=3800 && pc<=3999) return {err:"locGL"};
+    const z=zoneOf(pc); if(!z) return {err:"locErr"};
+    let best=null; for(const r of PLACES){ if(r[0]<=pc && (!best || r[0]>best[0])) best=r; }
+    const exact = PLACES.find(r=>r[0]===pc);
+    const range = (pc>=1000&&pc<=1499)?"København K":(pc>=1500&&pc<=1799)?"København V":(pc>=1800&&pc<=1999)?"Frederiksberg C":null;
+    const sameH = best && Math.floor(best[0]/100)===Math.floor(pc/100);
+    const name = exact?exact[1]:range?range:sameH?best[1]:null;
+    const pos = (exact||sameH)?[(exact||best)[2],(exact||best)[3]]:ZONE_POS[z];
+    return {loc:{pc:String(pc), city:name||"", lat:pos[0], lng:pos[1], zone:z}};
+  }
+  const n=q.toLowerCase();
+  const hit = PLACES.find(r=>r[1].toLowerCase()===n || r[4].includes(n));
+  if(hit) return {loc:{pc:String(hit[0]), city:hit[1], lat:hit[2], lng:hit[3], zone:zoneOf(hit[0])}};
+  if(/^(nuuk|tórshavn|torshavn|grønland|greenland|færøerne|faroe)/.test(n)) return {err:"locGL"};
+  return {err:"locErr"};
+}
+const locLabel = l => `${l.pc}${l.city?" "+l.city:""}`;
+function km(a,b){const R=6371,r=x=>x*Math.PI/180;const dLa=r(b.lat-a.lat),dLo=r(b.lng-a.lng);const h=Math.sin(dLa/2)**2+Math.cos(r(a.lat))*Math.cos(r(b.lat))*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+function nearestStores(n=3, loc=S.loc){ if(!loc) return []; return STORES.map(s=>({...s,dist:km(loc,s)})).sort((a,b)=>a.dist-b.dist).slice(0,n); }
+
+/* stock: online sizes + store stock per store */
+function sizeState(p,size){ const z=p.sizes.find(x=>x[0]===size); if(!z||z[1]) return "in"; if(z[3]) return "store"; return z[2]?"soon":"notify"; }
+function incomingDate(p,size){ const z=p.sizes.find(x=>x[0]===size); if(!z||z[1]||!z[2]) return null; return addBiz(dkClock().today, z[2]); }
+function baseFor(lines){ let d=dispatchDay(); for(const l of lines||[]){ const i=incomingDate(bySlug(l.slug),l.size); if(i && i>d) d=i; } return d; }
+function storeQty(store, p, size){
+  if(!RANGE[store.id] || !RANGE[store.id].includes(p.slug)) return 0;
+  const si=STORES.findIndex(s=>s.id===store.id), pi=pIndex(p), zi=p.sizes.findIndex(z=>z[0]===size);
+  const sz=p.sizes[zi]; if(!sz) return 0;
+  if(!sz[1]) return (sz[3] && sz[3].includes(store.id)) ? 1 : 0;
+  const h=(si*37+pi*11+zi*5+si*pi*3)%7; return h<2?0:(h%3)+1;
+}
+const storeHasAny = (store,p) => p.sizes.some(z=>storeQty(store,p,z[0])>0);
+/* spec = {slug} (product level) or {lines:[{slug,size,qty}]} */
+const stocked = (store,spec) => spec.lines ? (spec.lines.length>0 && spec.lines.every(l=>storeQty(store,bySlug(l.slug),l.size)>=(l.qty||1))) : storeHasAny(store,bySlug(spec.slug));
+function bestStore(spec){ const ns=nearestStores(3); return ns.find(s=>stocked(s,spec)) || ns[0]; }
+const STORE_HOURS = w => w===0?null:w===6?[10,17]:[10,20];
+const storeOpen = d => !!STORE_HOURS(d.getUTCDay()) && !HOLIDAYS.has(iso(d));
+function nextOpenDay(d){ let x=addDays(d,1); while(!storeOpen(x)) x=addDays(x,1); return x; }
+function pickupReady(inStock, base){
+  const c=dkClock();
+  if(inStock){
+    const hrs=STORE_HOURS(c.today.getUTCDay()), nowMin=c.h*60+c.m;
+    if(storeOpen(c.today) && nowMin+60 <= hrs[1]*60){
+      let ready=Math.max(nowMin+60, hrs[0]*60+60); ready=Math.ceil(ready/15)*15;
+      return {date:c.today, time:hhmm(ready)};
+    }
+    return {date:nextOpenDay(c.today), time:"11:00"};
+  }
+  return {date:addBiz(base||dispatchDay(),3), time:"12:00"};
+}
+function sameDay(spec){
+  if(!S.loc) return null;
+  if(spec.lines && spec.lines.some(l=>sizeState(bySlug(l.slug),l.size)==="soon")) return null;
+  const st = nearestStores(8).filter(s=>s.dist<=SAME_KM).find(s=>stocked(s,spec));
+  if(!st) return null;
+  const c=dkClock();
+  const date = (storeOpen(c.today) && c.h<SAME_CUTOFF) ? c.today : nextOpenDay(c.today);
+  return {store:st, date};
+}
+const STD_DAYS = {cph:4, zealand:4, bornholm:5, funen:3, jutland:3};
+function methodDate(id, base){
+  if(!S.loc) return null;
+  const z=S.loc.zone, d0=base||dispatchDay();
+  if(id==="std") return addBiz(d0, STD_DAYS[z]);
+  if(id==="fast") return addBiz(d0, z==="bornholm"?3:2);
+  if(id==="next") return z==="bornholm"?null:addBiz(d0,1);
+  return null;
+}
+function nomDates(spec){
+  if(!S.loc) return [];
+  const base=baseFor(spec.lines), start=methodDate("fast",base), sat=!!sameDay(spec);
+  const out=[]; let d=start;
+  while(out.length<6){ if(isBiz(d) || (sat && d.getUTCDay()===6 && !HOLIDAYS.has(iso(d)))) out.push(d); d=addDays(d,1); }
+  return out;
+}
+function cutoffLeft(){ const c=dkClock(); if(!isBiz(c.today) || c.h>=CUTOFF) return null; const left=CUTOFF*60-(c.h*60+c.m); return [Math.floor(left/60), left%60]; }
+/* one place that answers "what exactly do we promise for this method?" */
+function promiseFor(id, spec, storeId){
+  if(!S.loc) return null;
+  const base=baseFor(spec.lines);
+  if(id==="std"||id==="fast"||id==="next"){ const d=methodDate(id,base); return d?{date:d}:null; }
+  if(id==="same"){ const s=sameDay(spec); return s?{date:s.date, window:SAME_WINDOW, store:s.store}:null; }
+  if(id==="nominated"){ const list=nomDates(spec); const pick=list.find(d=>iso(d)===S.form.nomDate)||list[0]; return {date:pick, list}; }
+  if(id==="pickup"){
+    const st=(storeId && nearestStores(3).find(s=>s.id===storeId)) || bestStore(spec);
+    const inS=stocked(st,spec), r=pickupReady(inS, base);
+    return {date:r.date, time:r.time, store:st, inStock:inS};
+  }
+  return null;
+}
+const subtotal = () => S.basket.reduce((a,l)=>a+bySlug(l.slug).price*l.qty,0);
+function methodPrice(id){ return {std:subtotal()>=FREE_OVER?0:39, fast:59, next:149, same:99, nominated:49, pickup:0}[id]; }
+function priceLabel(id, ctx){
+  if(id==="pickup") return t("free");
+  if(id==="std" && (ctx==="pdp")) return `${money(39)}<div class="d" style="font-weight:500">${t("freeOver")}</div>`;
+  const v=methodPrice(id); return v===0?t("free"):money(v);
+}
+const METHODS = [["std","truck"],["fast","fast"],["next","cal"],["same","clock"],["nominated","calpick"],["pickup","store"]];
+
+/* ================= shared UI ================= */
+function locBlock(ctx){
+  const err = S.locErr[ctx];
+  if(S.loc && !S.editLoc?.[ctx]){
+    return `<div class="loc"><div class="set"><span>${ic("pin",16)} ${t("deliverTo")} <b>${esc(locLabel(S.loc))}</b></span><button class="linkbtn" data-act="editloc" data-ctx="${ctx}">${t("change")}</button></div></div>`;
+  }
+  return `<form class="loc" data-locform="${ctx}" novalidate>
+    <label for="loc-${ctx}">${t("locLabel")}</label>
+    <div class="row"><input id="loc-${ctx}" name="q" autocomplete="postal-code" placeholder="${t("locPh")}" value="${esc(S.locDraft?.[ctx]||"")}"><button class="btn sm" type="submit">${t("locBtn")}</button></div>
+    ${err?`<div class="err" role="alert">${t(err)}</div>`:""}
+  </form>`;
+}
+/* text describing one method for a spec; returns {html, na} */
+function methodText(id, spec, storeId){
+  const base=baseFor(spec.lines), delayed=iso(base)!==iso(dispatchDay());
+  if(!S.loc) return {html:`<div class="d">${t(id+"G")}${delayed&&id!=="same"?" "+t("fromDate")(fmtDate(base,true)):""}</div>`, na:false};
+  const p=promiseFor(id, spec, storeId);
+  if(!p){ return {html:`<div class="d">${t(id==="next"?"nextNA":"sameNA")}</div>`, na:true}; }
+  if(id==="pickup") return {html:`<div class="d exact">${t("ready")(fmtDate(p.date),p.time)}<br><span class="store-line">${esc(p.store.name)}, ${t("km")(Math.round(p.store.dist))}</span></div>`};
+  if(id==="same") return {html:`<div class="d exact">${t("sameExact")(fmtDate(p.date),SAME_WINDOW)}<br><span class="store-line">${t("fromStore")(esc(p.store.name))}</span></div>`};
+  if(id==="nominated"){
+    if(spec.choose) return {html:`<div class="d exact">${t("exact")(fmtDate(p.date))}</div>`};
+    return {html:`<div class="d exact">${t("nomFrom")(fmtDate(p.list[0],true), p.list.some(d=>d.getUTCDay()===6))}</div>`};
+  }
+  const left = (!delayed && id==="next") ? cutoffLeft() : null;
+  return {html:`<div class="d exact">${t("exact")(fmtDate(p.date))}${left?` <span style="color:var(--muted)">(${t("orderWithin")(left[0],left[1])})</span>`:""}</div>`};
+}
+function optionRows(ctx){
+  const spec = ctx==="pdp" ? (S.sel[S.curSlug]?{lines:[{slug:S.curSlug,size:S.sel[S.curSlug],qty:1}]}:{slug:S.curSlug}) : {lines:S.basket};
+  if(ctx==="pdp" && spec.lines && sizeState(bySlug(S.curSlug),spec.lines[0].size)==="notify") return `<p class="hint">${t("noDate")}</p>`;
+  return `<div class="opts">${METHODS.map(([id,icon])=>{
+    const m=methodText(id,spec);
+    return `<div class="opt${m.na?" na":""}" data-opt="${id}">${ICON[icon]}<div><div class="t">${t(id)}</div>${m.html}</div><div class="p">${priceLabel(id,ctx)}</div></div>`;
+  }).join("")}</div>`;
+}
+function cardDelivery(p){
+  if(!S.loc) return `<div class="dlv-mini"><div>${ICON.truck}<span>${t("cardStd")}</span></div><div>${ICON.store}<span>${t("cardStore")}</span></div></div>`;
+  const spec={slug:p.slug}, sd=sameDay(spec);
+  const line1 = sd ? `<span class="ok">${t("cardSame")(`<b>${fmtDate(sd.date,true)}</b>`)}</span>` : t("cardFrom")(`<b>${fmtDate(methodDate("next")||methodDate("fast"),true)}</b>`);
+  const st=bestStore(spec), has=stocked(st,spec), r=pickupReady(has);
+  const storeTxt = has ? (iso(r.date)===iso(dkClock().today) ? `<span class="ok">${t("cardStoreNow")(esc(short(st)))}</span>` : `<span class="ok">${t("cardStoreTomorrow")(esc(short(st)))}</span>, ${fmtDate(r.date,true)}`) : t("cardStoreFrom")(esc(short(st)), fmtDate(r.date,true));
+  return `<div class="dlv-mini"><div>${sd?ICON.clock:ICON.truck}<span>${line1}</span></div><div>${ICON.store}<span>${storeTxt}</span></div></div>`;
+}
+const priceHTML = p => `<div class="price"><span class="now${p.old?" red":""}">${money(p.price)}</span>${p.old?`<s>${money(p.old)}</s>`:""}</div>`;
+function lineTag(l){
+  const p=bySlug(l.slug), st=sizeState(p,l.size);
+  if(st==="soon") return ` · <span class="ok">${t("preShort")}</span>`;
+  if(st==="store") return ` · <span class="ok">${t("fromStoreTag")}</span>`;
+  return "";
+}
+
+/* ================= views ================= */
+function viewPLP(){
+  let list=[...PRODUCTS];
+  if(S.sort==="low") list.sort((a,b)=>a.price-b.price);
+  if(S.sort==="high") list.sort((a,b)=>b.price-a.price);
+  const near = S.loc ? nearestStores(1)[0] : null;
+  if(S.loc && S.filters.same) list=list.filter(p=>sameDay({slug:p.slug}));
+  if(S.loc && S.filters.store) list=list.filter(p=>stocked(near,{slug:p.slug}));
+  const storeLabel = near ? t("fStore")(esc(short(near))) : t("fStoreGeneric");
+  return `<div class="wrap">
+    <nav class="crumbs" aria-label="breadcrumb"><a href="#products">${t("home")}</a><span>/</span><span>${t("men")}</span><span>/</span><span>${t("newin")}</span></nav>
+    <h1 class="page">${t("plpTitle")}</h1>
+    <p class="sub">${t("products")(list.length)}</p>
+    <div class="toolbar">
+      <div class="filters">
+        <button class="chip" type="button">${t("fSize")}</button><button class="chip" type="button">${t("fColour")}</button><button class="chip" type="button">${t("fPrice")}</button>
+        <button class="chip" type="button" data-act="filter" data-filter="same" aria-pressed="${!!(S.loc&&S.filters.same)}">${ICON.clock} ${t("fSame")}</button>
+        <button class="chip" type="button" data-act="filter" data-filter="store" aria-pressed="${!!(S.loc&&S.filters.store)}">${ICON.store} ${storeLabel}</button>
+        <button class="chip" type="button" data-act="plploc">${ICON.pin} ${S.loc?`${t("deliverTo")} ${esc(locLabel(S.loc))}`:t("setLoc")}</button>
+      </div>
+      <label><span class="sr">${t("sort")}</span><select class="chip" id="sort">
+        <option value="rec"${S.sort==="rec"?" selected":""}>${t("sort")}: ${t("sortRec")}</option>
+        <option value="low"${S.sort==="low"?" selected":""}>${t("sortLow")}</option>
+        <option value="high"${S.sort==="high"?" selected":""}>${t("sortHigh")}</option></select></label>
+    </div>
+    ${S.showPlpLoc?`<div style="max-width:520px;margin:-8px 0 24px">${S.pendingFilter?`<p class="hint" style="margin:0 0 8px">${t("filterNeedsLoc")}</p>`:""}${locBlock("plp")}</div>`:""}
+    ${list.length?`<div class="grid">${list.map(p=>{
+      const pct = p.old?Math.round((1-p.price/p.old)*100):0;
+      return `<article class="card" data-slug="${p.slug}">
+        <a class="ph-link" href="#product-${p.slug}" aria-label="${esc(p.name)}">${photo(p)}</a>
+        <div class="meta-row"><div class="badges">${pct?`<span class="badge sale">${t("sale")(pct)}</span>`:""}</div>
+          <button class="heart" type="button" aria-label="${t("wish")}" aria-pressed="${!!S.wish[p.slug]}" data-act="wish" data-slug="${p.slug}">${ICON.heart}</button></div>
+        <div class="brand">${esc(p.brand)}</div>
+        <a class="name" href="#product-${p.slug}">${esc(p.name)}</a>
+        ${priceHTML(p)}
+        <div class="swatch"><i style="background:${p.hex}"></i>${esc(p.color)}</div>
+        ${cardDelivery(p)}
+      </article>`;}).join("")}</div>`:`<div class="noresults"><p>${t("noResults")}</p><button class="btn ghost" data-act="clearfilters">${t("clearFilters")}</button></div>`}
+  </div>`;
+}
+
+function viewPDP(p){
+  S.curSlug=p.slug;
+  const sel=S.sel[p.slug], d=p.desc[S.lang];
+  const pct = p.old?Math.round((1-p.price/p.old)*100):0;
+  const state = sel ? sizeState(p,sel) : "in";
+  const pdpBase = sel ? baseFor([{slug:p.slug,size:sel}]) : dispatchDay();
+  const hasOOS = p.sizes.some(z=>!z[1]);
+  const bagBtn = label => `<button class="btn block" type="button" data-act="add" id="addBtn">${ic("bag",18)} ${label}</button>`;
+  let buy;
+  if(state==="soon"){
+    const inc=incomingDate(p,sel), std=methodDate("std",pdpBase);
+    buy=`<div class="rescue soon" id="rescueSoon"><h3>${t("soonH")(esc(sel),fmtDate(inc))}</h3><p>${t("soonP")}</p>${bagBtn(std?t("preorderDate")(fmtDate(std,true)):t("preorder"))}</div>`;
+  } else if(state==="store"){
+    const holders = STORES.filter(s=>storeQty(s,p,sel)>0).map(s=>({...s,dist:S.loc?km(S.loc,s):null})).sort((a,b)=>(a.dist??0)-(b.dist??0));
+    buy=`<div class="rescue store" id="rescueStore"><h3>${t("storeH")(holders.length)}</h3><p>${t("storeP")}</p>
+      <ul>${holders.slice(0,3).map(s=>{const r=pickupReady(true);return `<li><span>${esc(s.name)}<small>${esc(s.addr)}${s.dist!=null?`, ${t("km")(Math.round(s.dist))}`:""}</small></span><span style="text-align:right"><b class="ok">${t("storeIn")}</b><small>${t("ready")(fmtDate(r.date,true),r.time).replace(/<\/?b>/g,"")}</small></span></li>`;}).join("")}</ul>
+      ${bagBtn(t("addFromStore"))}</div>`;
+  } else if(state==="notify"){
+    const key=p.slug+"|"+sel, done=S.notify[key];
+    const alts=p.sizes.filter(z=>z[1]).map(z=>`<button type="button" data-act="size" data-size="${z[0]}">${z[0]}</button>`).join("");
+    buy = done
+      ? `<div class="rescue done" id="rescueNotify" role="status"><h3>${ic("check",16)} ${t("notifyDoneH")}</h3><p style="margin:0">${t("notifyDone")(esc(sel),esc(done))} <button class="linkbtn" data-act="unnotify">${t("notifyUndo")}</button></p>${alts?`<div class="alt"><span>${t("altSizes")}</span>${alts}</div>`:""}</div>`
+      : `<form class="rescue" id="rescueNotify" data-notifyform novalidate><h3>${t("notifyH")(esc(sel))}</h3><p>${t("notifyP")}</p>
+          <label class="sr" for="notify-email">${t("notifyLabel")}</label>
+          <div class="row"><input id="notify-email" type="email" autocomplete="email" placeholder="${t("notifyPh")}" value="${esc(S.form.email||"")}" ${S.notifyErr?'aria-invalid="true"':""}><button class="btn" type="submit">${t("notifyBtn")}</button></div>
+          ${S.notifyErr?`<div class="formerr" role="alert">${t("badEmail")}</div>`:""}
+          ${alts?`<div class="alt"><span>${t("altSizes")}</span>${alts}</div>`:""}</form>`;
+  } else buy=bagBtn(t("add"));
+
+  let storeHTML;
+  if(!S.loc) storeHTML=`<p class="hint">${t("storeEnter")}</p>`;
+  else if(!sel) storeHTML=`<p class="hint">${t("storeHint")}</p><div class="stores">${nearestStores(3).map(s=>`<div><span>${esc(s.name)}<small>${esc(s.addr)}</small></span><span style="white-space:nowrap">${t("km")(Math.round(s.dist))}</span></div>`).join("")}</div>`;
+  else storeHTML=`<div class="stores">${nearestStores(3).map(s=>{
+      const q=storeQty(s,p,sel), r=pickupReady(q>0,pdpBase), rk=`${p.slug}|${sel}|${s.id}`;
+      const action = q>0 ? (S.reserved[rk] ? `<span class="reserved">${ic("check",13)} ${t("reservedTag")}</span>` : `<button class="rbtn" type="button" data-act="reserve" data-store="${s.id}">${t("reserve")}</button>`) : "";
+      return `<div><span>${esc(s.name)}<small>${esc(s.addr)}, ${t("km")(Math.round(s.dist))}</small></span><span style="text-align:right">${q>0?`<b class="ok">${t("storeIn")}</b>`:`<span class="warn">${t("storeOut")}</span>`}<small>${t("ready")(fmtDate(r.date,true),r.time).replace(/<\/?b>/g,"")}</small>${action}</span></div>`;}).join("")}</div>`;
+
+  return `<div class="wrap">
+    <nav class="crumbs" aria-label="breadcrumb"><a href="#products">${t("home")}</a><span>/</span><a href="#products">${t("newin")}</a><span>/</span><span>${p.cat[S.lang]}</span></nav>
+    <div class="pdp">
+      <div>${photo(p,"pdp-ph")}</div>
+      <div>
+        <div class="brand">${esc(p.brand)}</div>
+        <h1>${esc(p.name)}</h1>
+        ${priceHTML(p)}
+        ${pct?`<div class="badges" style="margin:6px 0 2px"><span class="badge sale">${t("sale")(pct)}</span></div>`:""}
+        <div class="swatch" style="font-size:14px;margin-top:10px"><i style="background:${p.hex};width:16px;height:16px"></i>${t("colour")}: <b style="color:var(--fg)">${esc(p.color)}</b></div>
+        <div class="section"><h2 style="display:flex;justify-content:space-between">${t("size")} <a href="#product-${p.slug}" style="font-weight:500;font-size:13px">${t("sizeGuide")}</a></h2>
+          <div class="sizes" role="group" aria-label="${t("size")}">${p.sizes.map(([z,st,inc,stores])=>{const cls=st?"":stores?" soon":inc?" soon":" oos"; const ttl=st?"":stores?t("lgStore"):inc?t("soonTitle"):t("outOfStock"); return `<button class="size${cls}" type="button" data-act="size" data-size="${z}" aria-pressed="${sel===z}" ${ttl?`title="${ttl}"`:""}>${z}${ttl?`<span class="sr">, ${ttl}</span>`:""}</button>`;}).join("")}</div>
+          ${hasOOS?`<div class="legend"><span><s>00</s> ${t("lgOut")}</span><span><i class="dot"></i> ${t("lgSoon")} / ${t("lgStore").toLowerCase()}</span></div>`:""}
+          ${S.sizeErr?`<div class="formerr" role="alert">${t("chooseSize")}</div>`:""}
+        </div>
+        <div class="section">${buy}</div>
+        <div class="section" id="deliveryBlock"><h2>${t("delivery")}</h2>${locBlock("pdp")}${optionRows("pdp")}</div>
+        <div class="section" id="storeStock"><h2>${t("storeStock")}</h2>${storeHTML}
+          <div class="aisle">${ICON.tablet}<span>${t("aisle")}</span></div></div>
+        <div class="section">
+          <details class="acc" open><summary>${t("desc")}</summary><p>${esc(d.intro)}</p></details>
+          <details class="acc"><summary>${t("details")}</summary><dl class="attrs">${d.attrs.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}<dt>${t("artno")}</dt><dd>${p.pid.split("_")[0]}</dd></dl></details>
+        </div>
+      </div>
+    </div></div>`;
+}
+
+function viewBasket(){
+  if(!S.basket.length) return `<div class="wrap empty"><h1 class="page">${t("empty")}</h1><p>${t("emptyTxt")}</p><a class="btn" href="#products">${t("shop")}</a></div>`;
+  const sub=subtotal(), ship=methodPrice("std"), toFree=Math.max(0,FREE_OVER-sub);
+  const std=promiseFor("std",{lines:S.basket});
+  return `<div class="wrap">
+    <nav class="crumbs"><a href="#products">${t("home")}</a><span>/</span><span>${t("basket")}</span></nav>
+    <h1 class="page">${t("basketTitle")}</h1><p class="sub">${t("products")(S.basket.reduce((a,l)=>a+l.qty,0))}</p>
+    <div class="two">
+      <div>${S.basket.map((l,i)=>{const p=bySlug(l.slug), st=sizeState(p,l.size);return `<div class="line">
+        <a href="#product-${p.slug}" aria-label="${esc(p.name)}">${photo(p,"sm")}</a>
+        <div><div class="brand">${esc(p.brand)}</div><a class="ttl" href="#product-${p.slug}">${esc(p.name)}</a>
+          <div class="info">${t("colour")}: ${esc(p.color)}<br>${t("sizeL")}: ${esc(l.size)}<br>${money(p.price)}</div>
+          ${st==="soon"?`<div class="pretag">${t("preTag")(fmtDate(incomingDate(p,l.size),true))}</div>`:st==="store"?`<div class="pretag">${t("fromStoreTag")}</div>`:""}
+          <div class="qty" role="group" aria-label="${t("qty")}"><button type="button" data-act="dec" data-i="${i}" aria-label="−">−</button><span>${l.qty}</span><button type="button" data-act="inc" data-i="${i}" aria-label="+">+</button></div>
+        </div>
+        <div style="text-align:right"><div style="font-weight:700">${money(p.price*l.qty)}</div><button class="linkbtn" style="margin-top:8px" data-act="rm" data-i="${i}">${t("remove")}</button></div>
+      </div>`;}).join("")}
+      <div style="margin-top:22px" id="basketDelivery"><h2 style="font-size:16px;margin:0 0 10px">${t("delivery")}</h2>${locBlock("basket")}${optionRows("basket")}${S.basket.some(l=>sizeState(bySlug(l.slug),l.size)==="soon")?`<p class="hint">${t("shipTogether")}</p>`:""}</div>
+      </div>
+      <aside class="panel" id="basketPanel"><h2>${t("summary")}</h2>
+        <div style="font-size:13px">${toFree>0?t("toFree")(money(toFree)):`<span class="ok">${t("gotFree")}</span>`}</div>
+        <div class="freebar"><i style="width:${Math.min(100,sub/FREE_OVER*100)}%"></i></div>
+        <div class="tot"><div><span>${t("subtotal")}</span><span>${money(sub)}</span></div>
+          <div><span>${t("shipping")}</span><span>${ship?money(ship):t("free")}</span></div>
+          <div class="grand"><span>${t("total")}</span><span>${money(sub+ship)}</span></div>
+          <div style="color:var(--muted);font-size:12.5px">${t("vat")}</div></div>
+        ${std?`<div class="promise"><b>${t("yourDate")}: ${fmtDate(std.date)}</b>${t("std")}, ${esc(locLabel(S.loc))}</div>`:""}
+        <a class="btn block" style="margin-top:16px" href="#checkout" id="toCheckout">${t("toCheckout")}</a>
+        <a class="btn ghost block" style="margin-top:10px" href="#products">${t("continue")}</a>
+      </aside>
+    </div></div>`;
+}
+
+function field(name,label,opts={}){
+  const v=S.form[name]||"", e=S.errors[name];
+  return `<div class="f ${opts.full?"full":""}"><label for="f-${name}">${label}</label><input id="f-${name}" name="${name}" value="${esc(v)}" ${opts.attr||""} ${e?'aria-invalid="true"':""}>${e?`<div class="msg">${e}</div>`:""}${opts.hint?`<div class="hint" style="margin-top:4px;font-size:12px">${opts.hint}</div>`:""}</div>`;
+}
+function checkoutMethods(){
+  const f=S.form, spec={lines:S.basket, choose:true};
+  let html=`<div class="opts" role="radiogroup" aria-label="${t("method")}">${METHODS.map(([id,icon])=>{
+    const m=methodText(id,spec,f.store);
+    return `<label class="opt choose${m.na?" na":""}" data-opt="${id}"><input type="radio" name="method" value="${id}" ${f.method===id?"checked":""} ${m.na?"disabled":""}><span class="radio"></span>${ICON[icon]}<div><div class="t">${t(id)}</div>${m.html}</div><div class="p">${priceLabel(id,"checkout")}</div></label>`;
+  }).join("")}</div>`;
+  if(!S.loc) html+=`<p class="hint">${t("methodHint")}</p>`;
+  if(f.method==="nominated" && S.loc){
+    const p=promiseFor("nominated",spec);
+    html+=`<div id="nomChips" style="padding-top:2px"><h3 style="font-size:14px;margin:18px 0 0">${t("nomPick")}</h3><div class="datechips" role="radiogroup" aria-label="${t("nomPick")}">${p.list.map(d=>`<label class="datechip"><input type="radio" name="nomDate" value="${iso(d)}" ${iso(d)===iso(p.date)?"checked":""}><span>${fmtDate(d,true).replace(/^(i dag|i morgen|today|tomorrow), /,"")}${d.getUTCDay()===6?`<small>${t("satNote")}</small>`:""}</span></label>`).join("")}</div></div>`;
+  }
+  if(f.method==="pickup" && S.loc){
+    const def=promiseFor("pickup",spec,f.store).store.id;
+    html+=`<h3 style="font-size:14px;margin:18px 0 8px">${t("pickStore")}</h3><div class="opts">${nearestStores(3).map(s=>{
+      const inS=stocked(s,spec), r=pickupReady(inS, baseFor(S.basket));
+      return `<label class="opt choose"><input type="radio" name="store" value="${s.id}" ${def===s.id?"checked":""}><span class="radio"></span>${ICON.store}<div><div class="t">${esc(s.name)}</div><div class="d">${esc(s.addr)}, ${t("km")(Math.round(s.dist))}</div><div class="d exact">${inS?`<b class="ok">${t("storeIn")}</b>. `:""}${t("ready")(fmtDate(r.date),r.time)}</div></div><div class="p">${t("free")}</div></label>`;}).join("")}</div>`;
+  }
+  if(S.errors.method) html+=`<div class="formerr">${S.errors.method}</div>`;
+  return html;
+}
+function promiseLine(id,p){
+  if(id==="pickup") return {head:`${t("yourPickup")}: ${fmtDate(p.date)}, ${p.time}`, sub:esc(p.store.name)};
+  if(id==="same") return {head:`${t("yourDate")}: ${fmtDate(p.date)}, ${p.window}`, sub:`${t(id)}, ${esc(locLabel(S.loc))}`};
+  return {head:`${t("yourDate")}: ${fmtDate(p.date)}`, sub:`${t(id)}, ${esc(locLabel(S.loc))}`};
+}
+function checkoutSummary(){
+  const f=S.form, sub=subtotal(), sp=methodPrice(f.method);
+  const p=promiseFor(f.method,{lines:S.basket},f.store); const pl=p?promiseLine(f.method,p):null;
+  return `<h2>${t("summary")}</h2>${S.basket.map(l=>{const pr=bySlug(l.slug);return `<div class="mini-line">${photo(pr,"sm")}<div><div style="font-weight:600;line-height:1.3">${esc(pr.name)}</div><div style="color:var(--muted);font-size:12.5px">${esc(l.size)} · ${l.qty} ×${lineTag(l)}</div></div><div style="font-weight:700">${money(pr.price*l.qty)}</div></div>`;}).join("")}
+    <div class="tot"><div><span>${t("subtotal")}</span><span>${money(sub)}</span></div><div><span>${t(f.method)}</span><span>${sp?money(sp):t("free")}</span></div>
+    <div class="grand"><span>${t("total")}</span><span>${money(sub+sp)}</span></div><div style="color:var(--muted);font-size:12.5px">${t("vat")}</div></div>
+    ${pl?`<div class="promise"><b>${pl.head}</b>${pl.sub}</div>`:""}`;
+}
+function viewCheckout(){
+  if(!S.basket.length) return viewBasket();
+  if(S.loc && !S.form.pc){ S.form.pc=S.loc.pc; S.form.city=S.loc.city; }
+  const f=S.form;
+  return `<div class="wrap">
+    <nav class="crumbs"><a href="#products">${t("home")}</a><span>/</span><a href="#basket">${t("basket")}</a><span>/</span><span>${t("checkout")}</span></nav>
+    <h1 class="page">${t("checkout")}</h1>
+    <div class="steps" aria-label="progress"><span>1. ${t("stepBasket")}</span><span class="on">2. ${t("stepDelivery")}</span><span class="on">3. ${t("stepPay")}</span></div>
+    <div class="two"><form id="co" novalidate>
+      <fieldset id="deliveryFirst"><legend>${t("whereDeliver")}</legend><p class="hint" style="margin:-4px 0 12px">${t("whereHint")}</p>
+        <div class="fields">${field("pc",t("pc"),{attr:'autocomplete="postal-code" inputmode="numeric" maxlength="4"'})}${field("city",t("city"),{attr:'autocomplete="address-level2"'})}</div>
+        <div id="methods" style="margin-top:14px">${checkoutMethods()}</div></fieldset>
+      <fieldset><legend>${t("contactAddr")}</legend><div class="fields">
+        ${field("email",t("email"),{full:true,attr:'type="email" autocomplete="email"'})}
+        ${field("phone",t("phone"),{full:true,attr:'type="tel" autocomplete="tel"',hint:t("phoneHint")})}
+        ${field("fname",t("fname"),{attr:'autocomplete="given-name"'})}${field("lname",t("lname"),{attr:'autocomplete="family-name"'})}
+        ${field("street",t("street"),{full:true,attr:'autocomplete="street-address"'})}
+      </div></fieldset>
+      <fieldset><legend>${t("payment")}</legend><div class="opts">${["mobilepay","card","klarna"].map(m=>`<label class="opt choose" style="grid-template-columns:22px 1fr"><input type="radio" name="pay" value="${m}" ${f.pay===m?"checked":""}><span class="radio"></span><div class="t">${t(m)}</div></label>`).join("")}</div><p class="hint">${t("payNote")}</p></fieldset>
+      <button class="btn block" type="submit" id="placeOrder">${t("place")}</button>
+    </form>
+    <aside class="panel" id="cosum">${checkoutSummary()}</aside></div></div>`;
+}
+
+function editPanel(o){
+  const open = Date.now() < o.editDeadline;
+  if(!open) return `<div class="box" id="editOrder"><p style="margin:0">${t("editClosed")}</p><div class="row-btns"><a class="btn ghost sm" href="#returns">${t("returnLink")}</a></div></div>`;
+  return `<div class="box" id="editOrder"><div class="brand">${t("editH")(o.editUntil)}</div><p style="margin:6px 0 4px">${t("editP")}</p>
+    ${o.lines.map((l,i)=>{const p=bySlug(l.slug); const opts=p.sizes.filter(z=>z[1]||z[0]===l.size).map(z=>`<option value="${z[0]}" ${z[0]===l.size?"selected":""}>${z[0]}</option>`).join("");
+      return `<div class="edit-line">${photo(p,"sm")}<div><div style="font-weight:600">${esc(p.name)}</div><div style="color:var(--muted);font-size:12.5px">${l.qty} ×${lineTag(l)}</div></div><label><span class="sr">${t("changeSize")}</span><select data-editline="${i}" aria-label="${t("changeSize")}">${opts}</select></label></div>`;}).join("")}
+    <div class="row-btns"><button class="btn ghost sm" type="button" data-act="askcancel">${t("cancel")}</button><a class="btn ghost sm" href="#returns">${t("returnLink")}</a></div></div>`;
+}
+function viewConfirm(){
+  const o=S.order; if(!o){ location.hash="#products"; return ""; }
+  if(o.cancelled) return `<div class="wrap"><div class="confirm"><h1 class="page">${t("cancelledH")}</h1><p class="sub">${t("cancelledP")(o.no)}</p><a class="btn" href="#products">${t("backShop")}</a></div></div>`;
+  const when = o.method==="pickup" ? `${fmtDate(o.date)}, ${o.time}` : o.method==="same" ? `${fmtDate(o.date)}, ${o.window}` : fmtDate(o.date);
+  return `<div class="wrap"><div class="confirm">
+    <div class="tick">${ICON.check}</div>
+    <h1 class="page">${t("thanks")}, ${esc(o.fname)}</h1>
+    <p class="sub">${t("orderNo")}: <b style="color:var(--fg)">${o.no}</b>. ${t("confirmMail")(esc(o.email))}</p>
+    <div class="box">
+      <div class="brand">${o.method==="pickup"?t("yourPickup"):t("yourDate")}</div>
+      <p class="big">${when}</p>
+      <p style="margin:8px 0 0">${t(o.method)}. ${o.method==="pickup"?`${t("pickupAt")}: ${esc(o.store.name)}, ${esc(o.store.addr)}`:`${t("deliverTo2")}: ${esc(o.fname)} ${esc(o.lname)}, ${esc(o.street)}, ${esc(o.pc)} ${esc(o.city)}`}</p>
+    </div>
+    ${editPanel(o)}
+    <div class="box"><div class="brand" style="margin-bottom:6px">${t("items")}</div>
+      ${o.lines.map(l=>{const p=bySlug(l.slug);return `<div class="mini-line">${photo(p,"sm")}<div><div style="font-weight:600">${esc(p.name)}</div><div style="color:var(--muted);font-size:12.5px">${esc(l.size)} · ${l.qty} ×${lineTag(l)}</div></div><div style="font-weight:700">${money(p.price*l.qty)}</div></div>`;}).join("")}
+      <div class="tot"><div><span>${t("subtotal")}</span><span>${money(o.sub)}</span></div><div><span>${t(o.method)}</span><span>${o.ship?money(o.ship):t("free")}</span></div><div class="grand"><span>${t("total")}</span><span>${money(o.sub+o.ship)}</span></div></div>
+    </div>
+    <a class="btn" style="margin-top:24px" href="#products">${t("backShop")}</a>
+  </div></div>`;
+}
+
+/* ---- returns & exchanges ---- */
+function altSize(l){ const p=bySlug(l.slug); return (p.sizes.find(z=>z[1] && z[0]!==l.size)||p.sizes[0])[0]; }
+function demoOrder(){
+  const r=resolvePlace(S.loc?S.loc.pc:"2100").loc;
+  return {no:"JJDK40817265", email:"demo@jackjones.dk", fname:"Demo", lname:"Kunde", street:"Østerbrogade 12", pc:r.pc, city:r.city,
+    lines:[{slug:"bomber-jakke",size:"M",qty:1},{slug:"jjiglenn-jjfox-jeans",size:"28",qty:1}], demo:true};
+}
+function qrSVG(seed){
+  let h=0; for(const ch of seed) h=(h*31+ch.charCodeAt(0))>>>0;
+  const rnd=()=>{h^=h<<13;h>>>=0;h^=h>>>17;h^=h<<5;h>>>=0;return h/4294967296;};
+  const N=25; let r="";
+  const finder=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3"/>`;
+  for(let y=0;y<N;y++) for(let x=0;x<N;x++){
+    const inF=(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9); if(inF) continue;
+    if(rnd()>.52) r+=`<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  }
+  return `<svg class="qr" viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges" role="img" aria-label="QR">${r}${finder(0,0)}${finder(N-7,0)}${finder(0,N-7)}</svg>`;
+}
+function viewReturns(){
+  const R=S.ret;
+  const head=`<div id="retHead"><nav class="crumbs"><a href="#products">${t("home")}</a><span>/</span><span>${t("retTitle")}</span></nav>
+    <h1 class="page">${t("retTitle")}</h1><p class="sub">${t("retSub")}</p></div>`;
+  if(R.step==="find"){
+    const pre=S.order&&!S.order.cancelled?S.order:null;
+    return `<div class="wrap">${head}<form id="retFind" novalidate style="max-width:520px;margin-bottom:64px"><div class="fields">
+      <div class="f full"><label for="r-no">${t("orderNoL")}</label><input id="r-no" value="${esc(R.no||pre?.no||"")}"></div>
+      <div class="f full"><label for="r-email">${t("email")}</label><input id="r-email" type="email" value="${esc(R.email||pre?.email||"")}"></div></div>
+      ${R.err?`<div class="formerr" role="alert">${t("notFound")}</div>`:""}
+      <div class="row-btns"><button class="btn" type="submit">${t("findOrder")}</button><button class="btn ghost" type="button" data-act="demoorder">${t("demoOrder")}</button></div></form></div>`;
+  }
+  const o=R.order, rl=resolvePlace(o.pc).loc, stores=nearestStores(3,rl);
+  if(!R.store) R.store=stores[0].id;
+  if(R.step==="items"){
+    return `<div class="wrap">${head}<div class="two"><div>
+      <p style="margin:0 0 6px;font-weight:700">${t("orderNo")}: ${esc(o.no)}</p>
+      <div id="retItems">${o.lines.map((l,i)=>{const p=bySlug(l.slug), s=R.sel[i]||{a:"keep"};
+        const sizes=p.sizes.filter(z=>z[1] && z[0]!==l.size).map(z=>`<option value="${z[0]}" ${s.size===z[0]?"selected":""}>${z[0]}</option>`).join("");
+        return `<div class="ret-line">${photo(p,"sm")}<div><div style="font-weight:700">${esc(p.name)}</div><div style="color:var(--muted);font-size:13px">${t("sizeL")}: ${esc(l.size)} · ${money(p.price)}</div>
+          <div class="seg" role="radiogroup">${[["keep",t("keep")],["return",t("ret")],["exchange",t("exch")]].map(([v,lab])=>`<label><input type="radio" name="ret-${i}" value="${v}" ${s.a===v?"checked":""}><span>${lab}</span></label>`).join("")}</div>
+          ${s.a==="exchange"?`<div style="margin-top:10px;font-size:13px"><label>${t("newSize")}: <select data-retsize="${i}">${sizes}</select></label></div>`:""}
+        </div></div>`;}).join("")}</div>
+      <fieldset id="retMethod" style="margin-top:26px"><legend>${t("howReturn")}</legend><div class="opts">
+        <label class="opt choose" style="grid-template-columns:22px 22px 1fr"><input type="radio" name="retm" value="store" ${R.method==="store"?"checked":""}><span class="radio"></span>${ICON.store}<div><div class="t">${t("inStore")}</div><div class="d">${t("inStoreP")}</div></div></label>
+        <label class="opt choose" style="grid-template-columns:22px 22px 1fr"><input type="radio" name="retm" value="carrier" ${R.method==="carrier"?"checked":""}><span class="radio"></span>${ICON.truck}<div><div class="t">${t("carrier")}</div><div class="d">${t("carrierP")}</div></div></label></div>
+        ${R.method==="store"?`<h3 style="font-size:14px;margin:16px 0 8px">${t("pickStore")}</h3><div class="opts">${stores.map(s=>`<label class="opt choose" style="grid-template-columns:22px 1fr auto"><input type="radio" name="retstore" value="${s.id}" ${R.store===s.id?"checked":""}><span class="radio"></span><div><div class="t">${esc(s.name)}</div><div class="d">${esc(s.addr)}</div></div><div class="d">${t("km")(Math.round(s.dist))}</div></label>`).join("")}</div>`:""}
+      </fieldset>
+      ${R.errItems?`<div class="formerr" role="alert">${t("chooseItem")}</div>`:""}
+      <button class="btn block" type="button" data-act="submitreturn" id="submitReturn" style="margin:8px 0 64px">${t("submitRet")}</button>
+    </div><aside class="panel"><h2>${t("summary")}</h2>${o.lines.map(l=>{const p=bySlug(l.slug);return `<div class="mini-line">${photo(p,"sm")}<div><div style="font-weight:600">${esc(p.name)}</div><div style="color:var(--muted);font-size:12.5px">${esc(l.size)}</div></div><div style="font-weight:700">${money(p.price)}</div></div>`;}).join("")}</aside></div></div>`;
+  }
+  const res=R.result;
+  return `<div class="wrap">${head}<div class="box" id="retDone" style="border:1px solid var(--line);padding:22px;margin-bottom:64px;max-width:820px">
+    <div class="ret-done">${qrSVG(res.no)}<div>
+      <h2 style="font-stretch:75%;font-weight:800;font-size:26px;margin:0 0 4px">${t("retDoneH")}</h2>
+      <p style="margin:0 0 12px;color:var(--muted)">${t("retNo")}: <b style="color:var(--fg)">${res.no}</b>. ${res.method==="store"?t("showQRstore")(esc(res.store.name)):t("showQRcarrier")}</p>
+      ${res.lines.map(x=>`<div class="mini-line" style="grid-template-columns:56px 1fr">${photo(bySlug(x.slug),"sm")}<div><div style="font-weight:600">${esc(bySlug(x.slug).name)}</div><div style="font-size:13px" class="${x.a==="exchange"?"ok":""}">${x.text}</div></div></div>`).join("")}
+      <div class="promise"><b>${res.refund}</b></div>
+      <div class="row-btns"><a class="btn" href="#products">${t("backShop")}</a></div>
+    </div></div></div></div>`;
+}
+function submitReturn(){
+  const R=S.ret, o=R.order, picks=o.lines.map((l,i)=>{const sel=R.sel[i]||{a:"keep"}; return {...l, a:sel.a, newSize:sel.size||altSize(l)};}).filter(x=>x.a!=="keep");
+  if(!picks.length){ R.errItems=true; render(); return; }
+  const rl=resolvePlace(o.pc).loc, store=nearestStores(3,rl).find(s=>s.id===R.store)||nearestStores(1,rl)[0];
+  let refund=0;
+  const lines=picks.map(x=>{
+    const p=bySlug(x.slug);
+    if(x.a==="return"){ refund+=p.price*x.qty; return {slug:x.slug,a:"return",text:t("outReturn")}; }
+    const newSize = x.newSize;
+    if(R.method==="store" && storeQty(store,p,newSize)>0) return {slug:x.slug,a:"exchange",text:t("outExchNow")(newSize,esc(short(store)))};
+    const ship=addBiz(dispatchDay(), (R.method==="store"?1:3)+STD_DAYS[rl.zone]);
+    return {slug:x.slug,a:"exchange",text:t("outExchShip")(newSize,fmtDate(ship))};
+  });
+  if(R.method==="carrier" && refund>0) refund=Math.max(0,refund-19.95);
+  R.result={no:"R"+String(Math.floor(1000000+Math.random()*8999999)), method:R.method, store, lines,
+    refund: refund>0 ? (R.method==="store"?t("refundNow")(money(refund)):t("refund14")(money(refund))) : t("noRefund")};
+  R.step="done"; R.errItems=false; render(); window.scrollTo(0,0);
+}
+
+/* ---- modal & toast ---- */
+function renderModal(){
+  const host=document.getElementById("modal"); const M=S.modal;
+  if(!M){ host.innerHTML=""; return; }
+  if(M.type==="tourmenu"){ host.innerHTML=tourMenuHTML(); return; }
+  let inner="";
+  if(M.type==="reserve"){
+    const st=STORES.find(s=>s.id===M.store), p=bySlug(M.slug);
+    if(M.done){
+      const r=pickupReady(true), hold=nextOpenDay(r.date);
+      inner=`<h2>${ic("check",20)} ${t("reserveDoneH")}</h2><p>${t("reserveDone")(esc(st.name),fmtDate(r.date),r.time,fmtDate(hold))}</p><button class="btn" data-act="closemodal">${t("close")}</button>`;
+    } else {
+      inner=`<h2>${t("reserveH")}</h2><p>${t("reserveP")(esc(st.name),esc(M.size))}</p>
+        <form id="reserveForm" novalidate><div class="f"><label for="rv-name">${t("reserveName")}</label><input id="rv-name" value="${esc(M.name||[S.form.fname,S.form.lname].filter(Boolean).join(" "))}" ${M.err?.name?'aria-invalid="true"':""}>${M.err?.name?`<div class="msg">${t("req")}</div>`:""}</div>
+        <div class="f"><label for="rv-contact">${t("reserveContact")}</label><input id="rv-contact" value="${esc(M.contact||S.form.email||"")}" ${M.err?.contact?'aria-invalid="true"':""}>${M.err?.contact?`<div class="msg">${t("req")}</div>`:""}</div>
+        <button class="btn block" type="submit">${t("reserveBtn")}</button></form>`;
+    }
+  } else if(M.type==="cancel"){
+    inner=`<h2>${t("cancelH")}</h2><p>${t("cancelP")}</p><div class="row-btns"><button class="btn" data-act="docancel">${t("cancelYes")}</button><button class="btn ghost" data-act="closemodal">${t("cancelNo")}</button></div>`;
+  }
+  host.innerHTML=`<div class="modal-bg" data-act="bgclose"><div class="modal" role="dialog" aria-modal="true"><button class="x" data-act="closemodal" aria-label="${t("close")}">×</button>${inner}</div></div>`;
+  host.querySelector("input,button.btn")?.focus();
+}
+let toastTimer;
+function toast(msg){ S.toast=msg; const el=document.getElementById("toast"); el.textContent=msg; el.hidden=false; clearTimeout(toastTimer); toastTimer=setTimeout(()=>{el.hidden=true;},2600); }
+
+/* ================= chrome ================= */
+function renderChrome(){
+  document.documentElement.lang=S.lang;
+  document.getElementById("usp").innerHTML=`<div class="wrap"><span>${ic("truck",15)} ${t("usp1")}</span><span>${ic("store",15)} ${t("usp2")}</span><span>${ic("ret",15)} ${t("usp3")}</span></div>`;
+  const n=S.basket.reduce((a,l)=>a+l.qty,0), nav=t("nav");
+  document.getElementById("hdr").innerHTML=`<div class="wrap hdr">
+    <div class="left"><a href="#products" class="on">${t("men")}</a><a href="#products">${t("junior")}</a></div>
+    <a class="logo" href="#products" aria-label="JACK & JONES"><b>JACK<i>&amp;</i>JONES</b></a>
+    <div class="right"><div class="lang" role="group" aria-label="Language"><button type="button" data-lang="da" aria-pressed="${S.lang==="da"}">DA</button><button type="button" data-lang="en" aria-pressed="${S.lang==="en"}">EN</button></div>
+      <button class="icon-btn" type="button" aria-label="Search">${ICON.search}</button>
+      <button class="icon-btn" type="button" aria-label="Account">${ICON.user}</button>
+      <a class="icon-btn" href="#basket" aria-label="${t("basket")} (${n})" id="bagLink">${ICON.bag}${n?`<span class="count">${n}</span>`:""}</a></div></div>
+    <nav class="cats"><div class="wrap">${nav.map((x,i)=>`<a href="#products" class="${i===nav.length-1?"sale":""}">${x}</a>`).join("")}</div></nav>`;
+  const F=t("footer"), cols=[t("f1"),t("f2"),t("f3"),t("f4")];
+  document.getElementById("ftr").innerHTML=`<div class="wrap"><div class="cols">${cols.map((c,i)=>`<div><h3>${F[i]}</h3>${c.map((x,j)=>`<p>${i===0&&j===2?`<a href="#returns">${x}</a>`:x}</p>`).join("")}</div>`).join("")}</div>
+    <div class="fine"><span>JACK&amp;JONES Danmark, mock-up</span><span>${t("fine")}</span></div></div>`;
+  document.getElementById("tour-fab").innerHTML=`<i></i>${t("guide")}`;
+  document.getElementById("tour-fab").hidden=!!S.tour || (S.modal&&S.modal.type==="tourmenu");
+}
+
+/* ================= router ================= */
+function route(){
+  const h=(location.hash||"#products").slice(1);
+  if(h.startsWith("product-")){ const p=bySlug(h.slice(8)); return p?["pdp",p]:["plp"]; }
+  if(["basket","checkout","confirmation","returns"].includes(h)) return [h];
+  return ["plp"];
+}
+let lastRoute="";
+function render(){
+  renderChrome();
+  const [r,p]=route(), app=document.getElementById("app");
+  app.innerHTML = r==="pdp"?viewPDP(p): r==="basket"?viewBasket(): r==="checkout"?viewCheckout(): r==="confirmation"?viewConfirm(): r==="returns"?viewReturns(): viewPLP();
+  renderModal();
+  if(location.hash!==lastRoute){ window.scrollTo(0,0); lastRoute=location.hash; }
+  if(S.tour) drawTour();
+}
+window.addEventListener("hashchange",()=>{ S.sizeErr=false; S.notifyErr=false; S.errors={}; S.showPlpLoc=false; S.pendingFilter=null; if(location.hash!=="#returns" && S.ret.step==="done") S.ret={...S.ret,step:"find",result:null,sel:{}}; render(); });
+
+/* ================= events ================= */
+function setLocation(loc){ S.loc=loc; S.locErr={}; S.editLoc={}; S.locDraft={}; S.form.pc=loc.pc; S.form.city=loc.city||S.form.city; S.form.store=null; S.form.nomDate=null; }
+document.addEventListener("click",e=>{
+  const lb=e.target.closest("[data-lang]"); if(lb){ S.lang=lb.dataset.lang; render(); return; }
+  const a=e.target.closest("[data-act]"); if(!a) return;
+  const act=a.dataset.act;
+  if(act==="bgclose"){ if(e.target===a){ S.modal=null; renderModal(); renderChrome(); } return; }
+  if(act==="closemodal"){ S.modal=null; renderModal(); renderChrome(); return; }
+  if(act==="wish"){ S.wish[a.dataset.slug]=!S.wish[a.dataset.slug]; render(); }
+  if(act==="filter"){ const f=a.dataset.filter; if(!S.loc){ S.showPlpLoc=true; S.pendingFilter=f; render(); document.getElementById("loc-plp")?.focus(); return; } S.filters[f]=!S.filters[f]; render(); }
+  if(act==="clearfilters"){ S.filters={same:false,store:false}; render(); }
+  if(act==="size"){ S.sel[S.curSlug]=a.dataset.size; S.sizeErr=false; S.notifyErr=false; render(); }
+  if(act==="unnotify"){ delete S.notify[S.curSlug+"|"+S.sel[S.curSlug]]; render(); document.getElementById("notify-email")?.focus(); }
+  if(act==="add"){
+    const p=bySlug(S.curSlug), z=S.sel[p.slug];
+    if(!z){ S.sizeErr=true; render(); document.querySelector(".sizes button")?.focus(); return; }
+    if(sizeState(p,z)==="notify") return;
+    const ex=S.basket.find(l=>l.slug===p.slug&&l.size===z);
+    const max = sizeState(p,z)==="store" ? 1 : 5;
+    if(ex) ex.qty=Math.min(max,ex.qty+1); else S.basket.push({slug:p.slug,size:z,qty:1});
+    location.hash="#basket";
+  }
+  if(act==="inc"){ const l=S.basket[+a.dataset.i]; l.qty=Math.min(sizeState(bySlug(l.slug),l.size)==="store"?1:5,l.qty+1); render(); }
+  if(act==="dec"){ const i=+a.dataset.i; const l=S.basket[i]; l.qty--; if(l.qty<1) S.basket.splice(i,1); render(); }
+  if(act==="rm"){ S.basket.splice(+a.dataset.i,1); render(); }
+  if(act==="editloc"){ S.editLoc={...(S.editLoc||{}),[a.dataset.ctx]:true}; S.locDraft={...(S.locDraft||{}),[a.dataset.ctx]:S.loc?locLabel(S.loc):""}; render(); document.getElementById("loc-"+a.dataset.ctx)?.focus(); }
+  if(act==="plploc"){ S.showPlpLoc=!S.showPlpLoc; S.pendingFilter=null; if(S.loc) S.editLoc={...(S.editLoc||{}),plp:true}; render(); document.getElementById("loc-plp")?.focus(); }
+  if(act==="reserve"){ S.modal={type:"reserve", store:a.dataset.store, slug:S.curSlug, size:S.sel[S.curSlug]}; renderModal(); }
+  if(act==="askcancel"){ S.modal={type:"cancel"}; renderModal(); }
+  if(act==="docancel"){ S.order.cancelled=true; S.modal=null; render(); }
+  if(act==="demoorder"){ S.ret={...S.ret, step:"items", order:demoOrder(), sel:{0:{a:"exchange",size:"L"}}, method:"store", store:null, err:false}; render(); }
+  if(act==="submitreturn") submitReturn();
+});
+document.addEventListener("submit",e=>{
+  const lf=e.target.closest("[data-locform]");
+  if(lf){ e.preventDefault(); const ctx=lf.dataset.locform; const q=lf.querySelector("input").value;
+    const r=resolvePlace(q);
+    if(r.err){ S.locErr[ctx]=r.err; S.locDraft={...(S.locDraft||{}),[ctx]:q}; render(); document.getElementById("loc-"+ctx)?.focus(); return; }
+    setLocation(r.loc);
+    if(ctx==="plp"){ S.showPlpLoc=false; if(S.pendingFilter){ S.filters[S.pendingFilter]=true; S.pendingFilter=null; } }
+    render(); return; }
+  if(e.target.id==="co"){ e.preventDefault(); placeOrder(); }
+  if(e.target.matches("[data-notifyform]")){ e.preventDefault();
+    const v=e.target.querySelector("input").value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ S.notifyErr=true; render(); document.getElementById("notify-email")?.focus(); return; }
+    S.notifyErr=false; S.notify[S.curSlug+"|"+S.sel[S.curSlug]]=v; if(!S.form.email) S.form.email=v; render(); }
+  if(e.target.id==="reserveForm"){ e.preventDefault();
+    const M=S.modal; M.name=document.getElementById("rv-name").value.trim(); M.contact=document.getElementById("rv-contact").value.trim();
+    M.err={name:!M.name, contact:!M.contact}; if(M.err.name||M.err.contact){ renderModal(); return; }
+    M.done=true; S.reserved[`${M.slug}|${M.size}|${M.store}`]=true; render(); }
+  if(e.target.id==="retFind"){ e.preventDefault();
+    const no=document.getElementById("r-no").value.trim(), em=document.getElementById("r-email").value.trim().toLowerCase();
+    const cand=[S.order&&!S.order.cancelled?S.order:null, demoOrder()].filter(Boolean).find(o=>o.no.toLowerCase()===no.toLowerCase() && o.email.toLowerCase()===em);
+    S.ret.no=no; S.ret.email=em;
+    if(!cand){ S.ret.err=true; render(); return; }
+    S.ret={...S.ret, step:"items", order:cand, sel:{}, err:false, store:null}; render(); }
+});
+document.addEventListener("change",e=>{
+  const n=e.target.name;
+  if(e.target.id==="sort"){ S.sort=e.target.value; render(); }
+  if(n==="method"){ S.form.method=e.target.value; S.errors.method=null; refreshCheckoutParts(); }
+  if(n==="store"){ S.form.store=e.target.value; refreshCheckoutParts(); }
+  if(n==="nomDate"){ S.form.nomDate=e.target.value; refreshCheckoutParts(); }
+  if(n==="pay"){ S.form.pay=e.target.value; }
+  if(e.target.dataset.editline){ const l=S.order.lines[+e.target.dataset.editline]; l.size=e.target.value; toast(t("sizeChanged")(l.size)); render(); }
+  if(n && n.startsWith("ret-")){ const i=+n.slice(4); const p=bySlug(S.ret.order.lines[i].slug); S.ret.sel[i]={a:e.target.value, size:S.ret.sel[i]?.size || altSize(S.ret.order.lines[i])}; S.ret.errItems=false; render(); }
+  if(e.target.dataset.retsize){ S.ret.sel[+e.target.dataset.retsize].size=e.target.value; }
+  if(n==="retm"){ S.ret.method=e.target.value; render(); }
+  if(n==="retstore"){ S.ret.store=e.target.value; }
+});
+document.addEventListener("input",e=>{
+  const f=e.target.closest("#co"); if(!f || !e.target.name || e.target.type==="radio") return;
+  S.form[e.target.name]=e.target.value;
+  if(S.errors[e.target.name]){ delete S.errors[e.target.name]; e.target.removeAttribute("aria-invalid"); e.target.parentNode.querySelector(".msg")?.remove(); }
+  if(e.target.name==="pc"){
+    const v=e.target.value.trim();
+    if(/^\d{4}$/.test(v)){ const r=resolvePlace(v); if(r.loc){ setLocation(r.loc); const c=document.getElementById("f-city"); if(c && r.loc.city) c.value=r.loc.city; refreshCheckoutParts(); } }
+  }
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){ if(S.modal){ S.modal=null; renderModal(); renderChrome(); } else if(S.tour) endTour(); }
+});
+function refreshCheckoutParts(){
+  const spec={lines:S.basket};
+  if(S.loc && ["next","same"].includes(S.form.method) && !promiseFor(S.form.method,spec)) S.form.method="std";
+  const m=document.getElementById("methods"), s=document.getElementById("cosum");
+  if(m) m.innerHTML=checkoutMethods(); if(s) s.innerHTML=checkoutSummary();
+}
+function placeOrder(){
+  const f=S.form, E={}, req=t("req");
+  ["email","phone","fname","lname","pc"].forEach(k=>{ if(!String(f[k]||"").trim()) E[k]=req; });
+  if(f.method!=="pickup"){ ["street","city"].forEach(k=>{ if(!String(f[k]||"").trim()) E[k]=req; }); }
+  if(f.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email)) E.email=t("badEmail");
+  if(f.phone && !/^\+?[0-9][0-9 ]{6,17}$/.test(f.phone.trim())) E.phone=t("badPhone");
+  if(f.pc){ const r=resolvePlace(f.pc); if(!/^\d{4}$/.test(f.pc.trim()) || r.err) E.pc=t("badPc"); else S.loc=r.loc; }
+  const p = S.loc ? promiseFor(f.method,{lines:S.basket},f.store) : null;
+  if(S.loc && !p) E.method=t("unavailable");
+  S.errors=E;
+  if(Object.keys(E).length){ render(); const first=document.querySelector('[aria-invalid="true"]'); if(first){ first.focus(); first.scrollIntoView({block:"center"}); } return; }
+  const c=dkClock();
+  S.order={no:"JJDK"+String(Math.floor(10000000+Math.random()*89999999)), email:f.email, fname:f.fname, lname:f.lname, street:f.street, pc:f.pc, city:f.city,
+    method:f.method, date:p.date, time:p.time||null, window:p.window||null, store:p.store||null,
+    lines:S.basket.map(l=>({...l})), sub:subtotal(), ship:methodPrice(f.method),
+    editDeadline:Date.now()+30*60000, editUntil:hhmm(c.h*60+c.m+30)};
+  S.basket=[]; S.errors={};
+  location.hash="#confirmation";
+}
+
+/* ================= guided demo (OneStock CXI paths) ================= */
+const SEEN_KEY="jj-cxi-demo-seen";
+function tourSetLoc(q){ setLocation(resolvePlace(q).loc); }
+function tourBasket(lines){ S.basket=lines.map(l=>({...l})); }
+function tourOrder(){
+  if(!S.loc) tourSetLoc("2100");
+  if(S.order && !S.order.cancelled && Date.now()<S.order.editDeadline) return;
+  const lines=[{slug:"bomber-jakke",size:"M",qty:1},{slug:"jjiglenn-jjfox-jeans",size:"28",qty:1}];
+  const p=promiseFor("std",{lines}), c=dkClock();
+  S.order={no:"JJDK"+String(Math.floor(10000000+Math.random()*89999999)), email:"demo@jackjones.dk", fname:"Demo", lname:"Kunde", street:"Østerbrogade 12", pc:S.loc.pc, city:S.loc.city,
+    method:"std", date:p.date, time:null, window:null, store:null, lines, sub:lines.reduce((a,l)=>a+bySlug(l.slug).price*l.qty,0), ship:0,
+    editDeadline:Date.now()+30*60000, editUntil:hhmm(c.h*60+c.m+30)};
+}
+const TOURS = [
+  {id:"stores", title:"Stores online", score:"Click & Collect 11%, In-store options 19%", steps:[
+    {route:"#products", setup:()=>{ tourSetLoc("2100"); S.filters={same:false,store:true}; }, target:'[data-filter="store"]',
+      title:"Filter by what’s in your local store",
+      today:"Listings have no store filter, and product data showed inStockRetail=false for every size checked.",
+      now:"With a postcode set, shoppers narrow the range to what’s on the shelf at their nearest store. The knitted jumper drops out because Fisketorvet doesn’t carry it."},
+    {route:"#product-bomber-jakke", setup:()=>{ if(!S.loc) tourSetLoc("2100"); S.sel["bomber-jakke"]="M"; }, target:"#storeStock",
+      title:"Store stock on the product page",
+      today:"No store stock or ‘find in store’ on product pages.",
+      now:"Live stock for the chosen size in the three nearest stores, each with a ready time. The same stock picture drives the delivery dates above."},
+    {route:"#product-bomber-jakke", setup:()=>{ if(!S.loc) tourSetLoc("2100"); S.sel["bomber-jakke"]="M"; }, target:'#storeStock .stores',
+      title:"Reserve & Collect",
+      today:"No reserve option on the product page, basket, help centre or FAQ.",
+      now:"Reserve now and pay in store. The item is held until 20:00 on the next opening day.",
+      tryit:"Click Reserve on a store with stock to see the confirmation."},
+    {route:"#checkout", setup:()=>{ if(!S.loc) tourSetLoc("2100"); tourBasket([{slug:"bomber-jakke",size:"M",qty:1}]); S.form.method="pickup"; S.form.store=null; }, target:"#methods",
+      title:"Click & Collect, ready in 1 hour",
+      today:"Checkout offers service points and parcel lockers, but no store pickup.",
+      now:"Free Click & Collect from the nearest store with stock, ready in an hour. If no nearby store has it, we transfer it and show the exact day it’s ready."}
+  ]},
+  {id:"promise", title:"Address-aware delivery promise", score:"Browsing 31%", steps:[
+    {route:"#product-logo-haettetroeje", setup:()=>{ tourSetLoc("1620"); delete S.sel["logo-haettetroeje"]; }, target:"#deliveryBlock",
+      title:"A promise for this postcode",
+      today:"A real strength: the product page already shows each option with a price and an exact date. But the dates aren’t postcode-specific.",
+      now:"Dates for 1620 København V, worked out from where the stock actually is, warehouse or nearby store."},
+    {route:"#product-logo-haettetroeje", setup:()=>{ tourSetLoc("9000"); }, target:"#deliveryBlock",
+      title:"Different address, different promise",
+      today:"In the audit, 1620 København V and 9000 Aalborg got identical dates at checkout.",
+      now:"Switch to 9000 Aalborg and the standard date, the same-day store and the Click & Collect store all change with the address."},
+    {route:"#checkout", setup:()=>{ tourSetLoc("9000"); tourBasket([{slug:"logo-haettetroeje",size:"L",qty:1}]); S.form.method="std"; }, target:"#deliveryFirst",
+      title:"Delivery options before personal details",
+      today:"Delivery options only appear on the shipping step, after the details step, and they’re the same for every postcode.",
+      now:"Options and exact dates come first, from the basket and postcode alone. Contact details come after, and any country code is accepted.",
+      tryit:"Change the postcode to 8000 and watch the dates update."}
+  ]},
+  {id:"faster", title:"Faster delivery from stores", score:"Home delivery 47%", steps:[
+    {route:"#products", setup:()=>{ tourSetLoc("2100"); S.filters={same:true,store:false}; }, target:'[data-filter="same"]',
+      title:"Same-day delivery, from stores",
+      today:"Options are PostNord, GLS and DHL Express only. No same day.",
+      now:"Products a nearby store can ship today are flagged on every card, and shoppers can filter for them."},
+    {route:"#product-bomber-jakke", setup:()=>{ if(!S.loc) tourSetLoc("2100"); S.sel["bomber-jakke"]="M"; }, target:'[data-opt="same"]',
+      title:"Ship from store",
+      today:"Next working day via DHL Express at 149 kr. is the fastest option.",
+      now:"A store within 15 km with the size in stock delivers the same evening when ordered by 14:00. Next-day stays available at 149 kr."},
+    {route:"#checkout", setup:()=>{ if(!S.loc) tourSetLoc("2100"); tourBasket([{slug:"bomber-jakke",size:"M",qty:1}]); S.form.method="nominated"; S.form.nomDate=null; }, target:"#nomChips",
+      title:"Choose your day, including Saturday",
+      today:"No date choice, and the help centre says no carrier delivers on Saturdays, Sundays or public holidays.",
+      now:"Shoppers pick the day that suits them. Saturdays are offered where a nearby store can fulfil the order."},
+    {route:"#basket", setup:()=>{ if(!S.loc) tourSetLoc("2100"); tourBasket([{slug:"bomber-jakke",size:"M",qty:1}]); }, target:"#basketPanel",
+      title:"Free delivery that means the door",
+      today:"The banner says ‘Gratis levering over 399 KR’, but home delivery stays 39 kr. Free only applies to service points.",
+      now:"Cheaper fulfilment across the network lets the 399 kr. threshold apply to home delivery too."}
+  ]},
+  {id:"soldout", title:"Sold out isn’t gone", score:"Rescue paths and restock clarity", steps:[
+    {route:"#product-jjiglenn-jjfox-jeans", setup:()=>{ S.sel["jjiglenn-jjfox-jeans"]="26"; }, target:"#rescueStore",
+      title:"Sold out online, in stock in store",
+      today:"When size L of the bedstefar trøje sold out online, the only option was ‘Giv mig besked’.",
+      now:"If a store holds the size, we still sell it: ship from that store or collect it. No lost sale."},
+    {route:"#product-jjiglenn-jjfox-jeans", setup:()=>{ S.sel["jjiglenn-jjfox-jeans"]="32"; }, target:"#rescueSoon",
+      title:"Coming back? Show the date",
+      today:"No restock timing, and the FAQ says sold-out sizes are unlikely to return.",
+      now:"Inbound stock is visible, so shoppers can pre-order with an exact delivery date that carries through basket, checkout and confirmation."},
+    {route:"#product-jjiglenn-jjfox-jeans", setup:()=>{ S.sel["jjiglenn-jjfox-jeans"]="36"; }, target:"#rescueNotify",
+      title:"Notify me, only when it’s honest",
+      today:"A notify button on sizes that won’t return sets a false expectation.",
+      now:"Notify is offered only when no store has it and nothing is inbound, alongside the sizes in stock now."},
+    {route:"#product-jjiglenn-jjfox-jeans", setup:()=>{ S.sel["jjiglenn-jjfox-jeans"]="28"; }, target:".aisle",
+      title:"Order in store, made visible",
+      today:"Ordering on an in-store screen is only mentioned inside the ‘Returnering af køb i butik’ help article.",
+      now:"The product page tells shoppers that store staff can order any size from the whole network and send it home."}
+  ]},
+  {id:"returns", title:"Returns, exchanges and order changes", score:"Returns 63%", steps:[
+    {route:"#confirmation", setup:()=>{ tourOrder(); }, target:"#editOrder",
+      title:"Change or cancel before release",
+      today:"FAQ: ‘Vi kan desværre ikke annullere/ændre din ordre’. Customers refuse the parcel instead, which costs two shipments.",
+      now:"A 30-minute window to change a size or cancel, before the order is released to the warehouse.",
+      tryit:"Change a size in the dropdown, or try Cancel order."},
+    {route:"#returns", setup:()=>{ tourOrder(); S.ret={...S.ret, step:"items", order:S.order, sel:{0:{a:"return",size:altSize(S.order.lines[0])}}, method:"store", store:null, err:false, errItems:false}; }, target:"#retMethod",
+      title:"Return in any store",
+      today:"FAQ: ‘Det er desværre ikke muligt at returnere i en butik’. Returns go by carrier with 19.95 kr. deducted.",
+      now:"Drop off in any store for free and get refunded on the spot. Carrier returns stay available."},
+    {route:"#returns", setup:()=>{ tourOrder(); S.ret={...S.ret, step:"items", order:S.order, sel:{0:{a:"exchange",size:altSize(S.order.lines[0])}}, method:"store", store:null, errItems:false}; }, target:"#retItems",
+      title:"Exchanges, not return-and-reorder",
+      today:"No online exchanges, so a size swap means a return plus a brand-new order.",
+      now:"Swap the size in store if it’s on the shelf, or have the new size sent as soon as the return is scanned.",
+      tryit:"Click Create return to see the QR code and outcome."},
+    {route:"#returns", setup:()=>{}, target:"#retHead",
+      title:"Keep what already works",
+      today:"The 100-day guest returns portal (order number plus email or postcode, label or QR) is a strength, and why Returns scores 63%.",
+      now:"Same simple portal, with store drop-off and exchanges added."}
+  ]}
+];
+function tourMenuHTML(){
+  return `<div class="modal-bg" data-act="bgclose"><div class="os-menu" role="dialog" aria-modal="true" aria-labelledby="osm-h">
+    <button class="x modal-x" data-act="closemodal" aria-label="Close" style="position:absolute;top:10px;right:10px;background:none;border:0;font-size:22px;cursor:pointer;color:#fff">×</button>
+    <h2 id="osm-h">Guided demo: JACK & JONES CXI</h2>
+    <p class="lead">Each path walks through one gap from the 4 Nov 2026 Customer Experience Index audit of jackjones.com/da-dk, and shows how it could work.</p>
+    <div class="os-score"><b>34.3%</b><span>overall CXI score today<br>Benchmark across comparable omnichannel retailers: ~76%</span></div>
+    <div class="os-paths">${TOURS.map((tr,i)=>`<button type="button" data-tour="${i}"><b>${i+1}. ${tr.title}</b><small>${tr.steps.length} steps</small><em>${tr.score}</em></button>`).join("")}</div>
+    <div class="os-foot"><span>Mock-up prepared by OneStock for demonstration only.</span><button type="button" data-act="closemodal">Explore on my own</button></div>
+  </div></div>`;
+}
+function openTourMenu(){ S.modal={type:"tourmenu"}; renderModal(); renderChrome(); document.querySelector(".os-paths button")?.focus(); }
+function startTour(i){ try{localStorage.setItem(SEEN_KEY,"1");}catch(e){} S.modal=null; renderModal(); goStep(i,0); }
+function goStep(ti,si){
+  const st=TOURS[ti].steps[si]; S.tour={ti,si}; S.modal=null;
+  if(st.setup) st.setup();
+  S.sizeErr=false; S.notifyErr=false; S.errors={};
+  if(location.hash!==st.route) location.hash=st.route; else render();
+  setTimeout(()=>{ drawTour(); focusTarget(); }, 140);
+}
+function endTour(){ S.tour=null; document.getElementById("tour-ring").hidden=true; document.getElementById("tour-pop").hidden=true; renderChrome(); }
+function tourTarget(){ if(!S.tour) return null; const st=TOURS[S.tour.ti].steps[S.tour.si]; return document.querySelector(st.target); }
+function focusTarget(){
+  const el=tourTarget(); if(!el) return;
+  const r=el.getBoundingClientRect(), narrow=innerWidth<=700;
+  const top = narrow ? r.top+scrollY-120 : r.top+scrollY-Math.max(100,(innerHeight-r.height)/2);
+  window.scrollTo({top:Math.max(0,top), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  document.querySelector("#tour-pop .tb.primary")?.focus({preventScroll:true});
+}
+function drawTour(){
+  const pop=document.getElementById("tour-pop");
+  if(!S.tour){ pop.hidden=true; return; }
+  const tr=TOURS[S.tour.ti], st=tr.steps[S.tour.si], last=S.tour.si===tr.steps.length-1, nextTour=TOURS[S.tour.ti+1];
+  pop.hidden=false;
+  pop.innerHTML=`<div class="tp-head"><span><b>${tr.title}</b> &nbsp;${S.tour.si+1} / ${tr.steps.length}</span><button class="tp-x" data-tact="end" aria-label="Exit guide">×</button></div>
+    <div class="tp-body"><h3>${st.title}</h3>
+      <div class="tp-today"><b>TODAY ON JACKJONES.COM</b><p>${st.today}</p></div>
+      <div class="tp-now"><b>IN THIS MOCK-UP</b><p>${st.now}</p></div>
+      ${st.tryit?`<p class="tp-try">${st.tryit}</p>`:""}</div>
+    <div class="tp-nav"><div class="dots">${tr.steps.map((_,i)=>`<i class="${i===S.tour.si?"on":""}"></i>`).join("")}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">${S.tour.si>0?`<button class="tb" data-tact="back">Back</button>`:`<button class="tb" data-tact="menu">All paths</button>`}
+      ${last?(nextTour?`<button class="tb" data-tact="menu">All paths</button><button class="tb primary" data-tact="nexttour">Next path</button>`:`<button class="tb primary" data-tact="menu">All paths</button>`):`<button class="tb primary" data-tact="next">Next</button>`}</div></div>`;
+  document.getElementById("tour-fab").hidden=true;
+}
+function positionTour(){
+  if(S.tour){
+    const ring=document.getElementById("tour-ring"), pop=document.getElementById("tour-pop"), el=tourTarget();
+    const vw=innerWidth, vh=innerHeight, pw=pop.offsetWidth, ph=pop.offsetHeight;
+    if(el){
+      const r=el.getBoundingClientRect(), pad=6;
+      ring.hidden=false; Object.assign(ring.style,{top:(r.top-pad)+"px",left:(r.left-pad)+"px",width:(r.width+pad*2)+"px",height:(r.height+pad*2)+"px"});
+      if(vw>700){
+        let left,top; const cl=(v,a,b)=>Math.min(Math.max(v,a),b);
+        const side=Math.max(vw-r.right-30, r.left-30);
+        const want = (side>=250 && side<380) ? Math.floor(side) : 380;
+        if(pop.offsetWidth!==want) pop.style.width=want+"px";
+        const pw2=pop.offsetWidth, ph2=pop.offsetHeight;
+        if(r.right+18+pw2<=vw-12){ left=r.right+18; top=cl(r.top,12,vh-ph2-12); }
+        else if(r.left-18-pw2>=12){ left=r.left-18-pw2; top=cl(r.top,12,vh-ph2-12); }
+        else if(r.bottom+18+ph2<=vh-12){ top=r.bottom+18; left=cl(r.left,12,vw-pw2-12); }
+        else { top=cl(r.top-18-ph2,12,vh-ph2-12); left=cl(r.left,12,vw-pw2-12); }
+        pop.style.left=left+"px"; pop.style.top=top+"px";
+      }
+    } else {
+      ring.hidden=true;
+      if(vw>700){ pop.style.left=((vw-pw)/2)+"px"; pop.style.top=((vh-ph)/2)+"px"; }
+    }
+  }
+  requestAnimationFrame(positionTour);
+}
+document.addEventListener("click",e=>{
+  const tb=e.target.closest("[data-tour]"); if(tb){ startTour(+tb.dataset.tour); return; }
+  const ta=e.target.closest("[data-tact]"); if(ta){
+    const a=ta.dataset.tact, T0=S.tour;
+    if(a==="end") endTour();
+    if(a==="next") goStep(T0.ti,T0.si+1);
+    if(a==="back") goStep(T0.ti,T0.si-1);
+    if(a==="nexttour") goStep(T0.ti+1,0);
+    if(a==="menu"){ endTour(); openTourMenu(); }
+    return;
+  }
+  if(e.target.closest("#tour-fab")){ openTourMenu(); }
+});
+
+/* ================= boot ================= */
+render();
+requestAnimationFrame(positionTour);
+let seen=false; try{ seen=localStorage.getItem(SEEN_KEY)==="1"; }catch(e){}
+if(!seen && !location.hash){ openTourMenu(); try{localStorage.setItem(SEEN_KEY,"1");}catch(e){} }
+
+</script>
+</body>
+</html>
